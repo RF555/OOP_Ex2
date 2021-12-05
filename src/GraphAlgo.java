@@ -1,9 +1,6 @@
 import api.*;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
     final int WHITE = 0, GRAY = 1, BLACK = 2;

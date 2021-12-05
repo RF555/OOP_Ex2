@@ -3,28 +3,30 @@ import api.GeoLocation;
 import java.util.LinkedList;
 
 public class Node implements api.NodeData {
-    final int WHITE =0 , GRAY = 1 , BLACK=2;
+    final int WHITE = 0, GRAY = 1, BLACK = 2;
     int key;
     double nodeWeight;
     GeoLocationData cordinates;
-    int tagInfo , previusNodeId;
+    int tagInfo, previusNodeId;
     LinkedList<Edge> incomingEdges = new LinkedList<Edge>();
+    double spv; // Shortest path value (for the ShortestPath function)
 
-
-    public Node(){
+    public Node() {
         this.cordinates = new GeoLocationData();
         this.key = 0;
-        this.tagInfo =WHITE;
+        this.tagInfo = WHITE;
         this.nodeWeight = Integer.MAX_VALUE;
         this.previusNodeId = -1;
     }
-    public  Node(int key , GeoLocation L){
-        this.cordinates = (GeoLocationData)L;
+
+    public Node(int key, GeoLocation L) {
+        this.cordinates = (GeoLocationData) L;
         this.key = key;
         this.tagInfo = WHITE;
         this.nodeWeight = Integer.MAX_VALUE;
         this.previusNodeId = -1;
     }
+
     @Override
     public int getKey() {
 
@@ -61,7 +63,7 @@ public class Node implements api.NodeData {
 
     @Override
     public void setInfo(String s) {
-        String tempString =s.split(":")[1];
+        String tempString = s.split(":")[1];
         this.key = Integer.parseInt(tempString);
     }
 
@@ -76,7 +78,17 @@ public class Node implements api.NodeData {
 
         this.tagInfo = t;
     }
-    public String toString (){
+
+    public String toString() {
         return "Key:" + this.key;
     }
+
+    public double getSpv() {
+        return spv;
+    }
+
+    public void setSpv(double spv) {
+        this.spv = spv;
+    }
+
 }
