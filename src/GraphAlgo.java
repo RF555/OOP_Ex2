@@ -11,6 +11,9 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
 
     public GraphAlgo(DWGraph g) {
         init(g);
+        this.nodes = g.nodes;
+        this.edegs = g.edegs;
+
     }
 
     @Override
