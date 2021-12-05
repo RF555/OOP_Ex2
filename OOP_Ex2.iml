@@ -7,10 +7,11 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library">
-      <library>
+    <orderEntry type="module-library" exported="">
+      <library type="repository">
+        <properties maven-id="org.json:json:20210307" />
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/json-20210307.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/json/json/20210307/json-20210307.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
