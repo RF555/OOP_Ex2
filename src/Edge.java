@@ -53,6 +53,10 @@ public class Edge implements api.EdgeData, Comparable<Edge> {
         return this.tagInfo;
     }
 
+    public String toString() {
+        return ("{\n    \"src\": " + this.source + ",\n    \"w\": " + this.weight + ",\n    \"dest\": " + this.destination + "\n}");
+    }
+
     @Override
     public void setTag(int t) {
         this.tagInfo = t;
