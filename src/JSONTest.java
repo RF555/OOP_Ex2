@@ -5,14 +5,22 @@ import org.json.JSONObject;
 import static org.junit.jupiter.api.Assertions.*;
 
 class JSONTest {
-        String st1 = "C:\\Users\\roeyf\\OneDrive - Ariel University\\Matanel&Roey\\Ex2-OOP\\data\\G1.json";
-    String st2 = "C:\\Users\\roeyf\\OneDrive - Ariel University\\Matanel&Roey\\Ex2-OOP\\data\\G2.json";
-    String st3 = "C:\\Users\\roeyf\\OneDrive - Ariel University\\Matanel&Roey\\Ex2-OOP\\data\\G3.json";
-    String g1 = "C:\\Users\\roeyf\\OneDrive - Ariel University\\Matanel&Roey\\Ex2-OOP\\src\\jsonFiles\\g1.json";
+    //roeyf
+//    String st1 = "C:\\Users\\roeyf\\OneDrive - Ariel University\\Matanel&Roey\\Ex2-OOP\\data\\G1.json";
+//    String st2 = "C:\\Users\\roeyf\\OneDrive - Ariel University\\Matanel&Roey\\Ex2-OOP\\data\\G2.json";
+//    String st3 = "C:\\Users\\roeyf\\OneDrive - Ariel University\\Matanel&Roey\\Ex2-OOP\\data\\G3.json";
+//    String g1 = "C:\\Users\\roeyf\\OneDrive - Ariel University\\Matanel&Roey\\Ex2-OOP\\src\\jsonFiles\\g1.json";
+
+    //Roey
+    String st1 = "C:\\Users\\Roey\\OneDrive - Ariel University\\Matanel&Roey\\Ex2-OOP\\data\\G1.json";
+    String st2 = "C:\\Users\\Roey\\OneDrive - Ariel University\\Matanel&Roey\\Ex2-OOP\\data\\G2.json";
+    String st3 = "C:\\Users\\Roey\\OneDrive - Ariel University\\Matanel&Roey\\Ex2-OOP\\data\\G3.json";
+    String g1 = "C:\\Users\\Roey\\OneDrive - Ariel University\\Matanel&Roey\\Ex2-OOP\\src\\jsonFiles\\g1.json";
+
     JSON g1_json = new JSON(g1);
-    JSON G1_json=new JSON(st1);
-    JSON G2_json=new JSON(st2);
-    JSON G3_json=new JSON(st3);
+    JSON G1_json = new JSON(st1);
+    JSON G2_json = new JSON(st2);
+    JSON G3_json = new JSON(st3);
 
     @Test
     void typeTest() {
