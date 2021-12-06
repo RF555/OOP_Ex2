@@ -42,6 +42,29 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
         return false;
     }
 
+    //Floyd-Warshall
+    @Override
+    public double shortestPathDist(int src, int dest) {
+        int v = this.nodes.size(); // number of nodes
+        for (int k = 0; k < v; k++) { // first loop - over all nodes
+            for (int i = 0; i < v; i++) { // second loop (dest) - pair all nodes the k'th node (from the first loop)
+                for (int j = 0; j < v; j++) {
+                    /*third loop (dest) - for all pairs->
+                        check if the path i->j is longer than the path i->k->j
+                        if so set i->j=i->k->j
+                        meaning:
+                            i->j = min( [i->j] , [i->k +k->j] )
+                            https://www.programiz.com/dsa/floyd-warshall-algorithm
+                    * */
+
+                }
+            }
+
+        }
+    }
+
+    //most current - Dijkstra
+/*
     @Override
     public double shortestPathDist(int src, int dest) {
         int node_num = this.nodes.size();
@@ -80,105 +103,107 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
 
         return this.nodes.get(dest).getSpv();
     }
+**/
+
+    //third try
+    /*
+    @Override
+    public double shortestPathDist(int src, int dest) {
+        double[] dist = new double[nodes.size()];
+        boolean[] visited = new boolean[nodes.size()];
+        for (int i = 0; i < dist.length; i++) {
+            visited[i] = false;
+            dist[i] = Double.MAX_VALUE;
+        }
+        dist[src] = 0;
+        for (int i = 0; i < nodes.size(); i++) {
+            if (edegs.get(i).size() > 0) {
+//                PriorityQueue<EdgeData> pq = new PriorityQueue<>(edegs.get(i).size());
+//                pq.addAll((Collection<? extends EdgeData>) edegs.get(i).values());
+                if (!visited[i]) {
+                    Iterator<Map.Entry<Integer, Edge>> it = this.edegs.get(i).entrySet().iterator();
+                    while (it.hasNext()) {
+                        EdgeData e = pq.poll();
+                        double temp = dist[i] + e.getWeight();
+                        if (temp < dist[e.getDest()])
+                            dist[e.getDest()] = temp;
+                    }
+                }
+                if (pq.isEmpty())
+                    break;
+                for (int v = 0; v < edegs.get(i).size(); v++) {
+                    if (!visited[v] && ((dist[i] + edegs.get(i).get(v).getWeight()) < dist[v])) {
+                        dist[v] = dist[i] + edegs.get(i).get(v).getWeight();
+                    }
+                }
+            }
+            visited[i] = true;
+        }
+        return dist[dest];
+    }
+**/
+/*
+    @Override
+    public double shortestPathDist(int src, int dest) {
+        double[] dist = new double[nodes.size()];
+        boolean[] visited = new boolean[nodes.size()];
+        double[] path = new double[nodes.size()];
+        for (int i = 0; i < nodes.size(); i++) {
+            visited[i] = false;
+            path[i] = -1;
+            dist[i] = Double.MAX_VALUE;
+        }
+        dist[src] = 0;
+        path[src] = -1;
+        int curr = src;
+        Set<Integer> sett = new HashSet<>();
+        while (true) {
+            // Mark current as visited
+            visited[curr] = true;
+            Iterator it=this.edegs.get(i).entrySet().iterator();
+            for (int i = 0; i < this.edegs.get(curr).size(); i++) {
+                int v = this.edegs.get(curr).get(i).getDest();
+                if (visited[v])
+                    continue;
+
+                // Inserting into the
+                // visited vertex
+                sett.add(v);
+                double alt = dist[curr] + this.edegs.get(curr).get(v).getWeight();
+
+                // Condition to check the distance
+                // is correct and update it
+                // if it is minimum from the previous
+                // computed distance
+                if (alt < dist[v]) {
+                    dist[v] = alt;
+                    path[v] = curr;
+                }
+            }
+            sett.remove(curr);
+
+            if (sett.isEmpty())
+                break;
+
+            // The new current
+            double minDist = Double.MAX_VALUE;
+            int index = 0;
+
+            // Loop to update the distance
+            // of the vertices of the graph
+            for (int a : sett) {
+                if (dist[a] < minDist) {
+                    minDist = dist[a];
+                    index = a;
+                }
+            }
+            curr = index;
+        }
+        return dist[dest];
 
 
-//    @Override
-//    public double shortestPathDist(int src, int dest) {
-//        double[] dist = new double[nodes.size()];
-//        boolean[] visited = new boolean[nodes.size()];
-//        for (int i = 0; i < dist.length; i++) {
-//            visited[i] = false;
-//            dist[i] = Double.MAX_VALUE;
-//        }
-//        dist[src] = 0;
-//        for (int i = 0; i < nodes.size(); i++) {
-//            if (edegs.get(i).size() > 0) {
-////                PriorityQueue<EdgeData> pq = new PriorityQueue<>(edegs.get(i).size());
-////                pq.addAll((Collection<? extends EdgeData>) edegs.get(i).values());
-//                if (!visited[i]) {
-//                    Iterator<Map.Entry<Integer, Edge>> it = this.edegs.get(i).entrySet().iterator();
-//                    while (it.hasNext()) {
-//                        EdgeData e = pq.poll();
-//                        double temp = dist[i] + e.getWeight();
-//                        if (temp < dist[e.getDest()])
-//                            dist[e.getDest()] = temp;
-//                    }
-//                }
-//                if (pq.isEmpty())
-//                    break;
-//                for (int v = 0; v < edegs.get(i).size(); v++) {
-//                    if (!visited[v] && ((dist[i] + edegs.get(i).get(v).getWeight()) < dist[v])) {
-//                        dist[v] = dist[i] + edegs.get(i).get(v).getWeight();
-//                    }
-//                }
-//            }
-//            visited[i] = true;
-//        }
-//        return dist[dest];
-//    }
-
-
-//    @Override
-//    public double shortestPathDist(int src, int dest) {
-//        double[] dist = new double[nodes.size()];
-//        boolean[] visited = new boolean[nodes.size()];
-//        double[] path = new double[nodes.size()];
-//        for (int i = 0; i < nodes.size(); i++) {
-//            visited[i] = false;
-//            path[i] = -1;
-//            dist[i] = Double.MAX_VALUE;
-//        }
-//        dist[src] = 0;
-//        path[src] = -1;
-//        int curr = src;
-//        Set<Integer> sett = new HashSet<>();
-//        while (true) {
-//            // Mark current as visited
-//            visited[curr] = true;
-//            Iterator it=this.edegs.get(i).entrySet().iterator();
-//            for (int i = 0; i < this.edegs.get(curr).size(); i++) {
-//                int v = this.edegs.get(curr).get(i).getDest();
-//                if (visited[v])
-//                    continue;
-//
-//                // Inserting into the
-//                // visited vertex
-//                sett.add(v);
-//                double alt = dist[curr] + this.edegs.get(curr).get(v).getWeight();
-//
-//                // Condition to check the distance
-//                // is correct and update it
-//                // if it is minimum from the previous
-//                // computed distance
-//                if (alt < dist[v]) {
-//                    dist[v] = alt;
-//                    path[v] = curr;
-//                }
-//            }
-//            sett.remove(curr);
-//
-//            if (sett.isEmpty())
-//                break;
-//
-//            // The new current
-//            double minDist = Double.MAX_VALUE;
-//            int index = 0;
-//
-//            // Loop to update the distance
-//            // of the vertices of the graph
-//            for (int a : sett) {
-//                if (dist[a] < minDist) {
-//                    minDist = dist[a];
-//                    index = a;
-//                }
-//            }
-//            curr = index;
-//        }
-//        return dist[dest];
-//
-//
-//    }
-
+    }
+**/
     @Override
     public List<NodeData> shortestPath(int src, int dest) {
         return null;
