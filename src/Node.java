@@ -2,12 +2,12 @@ import api.GeoLocation;
 
 import java.util.LinkedList;
 
-public class Node implements api.NodeData {
+public class Node implements api.NodeData, Comparable<Node> {
     final int WHITE = 0, GRAY = 1, BLACK = 2;
     int key;
     double nodeWeight;
     GeoLocationData cordinates;
-    int tagInfo, previusNodeId;
+    int tagInfo, prevNodeID;
     LinkedList<Edge> incomingEdges = new LinkedList<Edge>();
     double spv; // Shortest path value (for the ShortestPath function)
 
@@ -16,7 +16,7 @@ public class Node implements api.NodeData {
         this.key = 0;
         this.tagInfo = WHITE;
         this.nodeWeight = Integer.MAX_VALUE;
-        this.previusNodeId = -1;
+        this.prevNodeID = -1;
     }
 
     public Node(int key, GeoLocation L) {
@@ -24,7 +24,7 @@ public class Node implements api.NodeData {
         this.key = key;
         this.tagInfo = WHITE;
         this.nodeWeight = Integer.MAX_VALUE;
-        this.previusNodeId = -1;
+        this.prevNodeID = -1;
     }
 
     @Override
@@ -91,4 +91,24 @@ public class Node implements api.NodeData {
         this.spv = spv;
     }
 
+    public void setPrevNodeID(int prevNodeID) {
+        this.prevNodeID = prevNodeID;
+    }
+
+    public int getPrevNodeID() {
+        return prevNodeID;
+    }
+
+    public double getNodeWeight() {
+        return nodeWeight;
+    }
+
+    public void setNodeWeight(double nodeWeight) {
+        this.nodeWeight = nodeWeight;
+    }
+
+    @Override
+    public int compareTo(Node n) {
+        return Double.compare(this.getNodeWeight(), n.getNodeWeight());
+    }
 }

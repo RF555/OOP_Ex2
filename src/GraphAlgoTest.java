@@ -59,19 +59,19 @@ public class GraphAlgoTest {
 
     @Test
     void shortestPathDistTest2() {
-        Assertions.assertEquals(ga2.shortestPathDist(0, 0), 0);
-//        assertEquals(ga2.shortestPathDist(1, 1), 0);
-//        assertEquals(ga2.shortestPathDist(2, 2), 0);
-//        assertEquals(ga2.shortestPathDist(3, 3), 0);
-//        assertEquals(ga2.shortestPathDist(4, 4), 0);
-//        assertEquals(ga2.shortestPathDist(0, 1), 3);
-//        assertEquals(ga2.shortestPathDist(0, 2), 6);
-////        assertEquals(ga2.shortestPathDist(0, 3), 13);
-//        assertEquals(ga2.shortestPathDist(1, 0), 10);
-//        assertEquals(ga2.shortestPathDist(1, 2), 3);
-////        assertEquals(ga2.shortestPathDist(1, 3), 10);
-//        assertEquals(ga2.shortestPathDist(0, 4), 8);
-//        assertEquals(ga2.shortestPathDist(4, 0), 12);
+//        Assertions.assertEquals(ga2.shortestPathDist(0, 0), 0);
+//        Assertions.assertEquals(ga2.shortestPathDist(1, 1), 0);
+//        Assertions.assertEquals(ga2.shortestPathDist(2, 2), 0);
+//        Assertions.assertEquals(ga2.shortestPathDist(3, 3), 0);
+//        Assertions.assertEquals(ga2.shortestPathDist(4, 4), 0);
+        Assertions.assertEquals(ga2.shortestPathDist(0, 1), 3);
+        Assertions.assertEquals(ga2.shortestPathDist(0, 2), 6);
+//        Assertions.assertEquals(ga2.shortestPathDist(0, 3), 13);
+        Assertions.assertEquals(ga2.shortestPathDist(1, 0), 10);
+        Assertions.assertEquals(ga2.shortestPathDist(1, 2), 3);
+//        Assertions.assertEquals(ga2.shortestPathDist(1, 3), 10);
+        Assertions.assertEquals(ga2.shortestPathDist(0, 4), 8);
+        Assertions.assertEquals(ga2.shortestPathDist(4, 0), 12);
 
     }
 }

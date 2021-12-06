@@ -94,6 +94,12 @@ public class DWGraph implements api.DirectedWeightedGraph {
         return it;
     }
 
+    public Iterator<Node> NodeIter() {
+        Iterator it = nodes.values().iterator();
+        this.iterFlag = true;
+        return it;
+    }
+
     @Override
     public Iterator<EdgeData> edgeIter() {
         ArrayList<EdgeData> edgeArrayList = new ArrayList<>();
