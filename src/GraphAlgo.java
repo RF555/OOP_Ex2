@@ -42,8 +42,29 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
         return false;
     }
 
-    //most current - Dijkstra
+    //Floyd-Warshall
+    @Override
+    public double shortestPathDist(int src, int dest) {
+        int v = this.nodes.size(); // number of nodes
+        for (int k = 0; k < v; k++) { // first loop - over all nodes
+            for (int i = 0; i < v; i++) { // second loop (dest) - pair all nodes the k'th node (from the first loop)
+                for (int j = 0; j < v; j++) {
+                    /*third loop (dest) - for all pairs->
+                        check if the path i->j is longer than the path i->k->j
+                        if so set i->j=i->k->j
+                        meaning:
+                            i->j = min( [i->j] , [i->k +k->j] )
+                            https://www.programiz.com/dsa/floyd-warshall-algorithm
+                    * */
 
+                }
+            }
+
+        }
+    }
+
+    //most current - Dijkstra
+/*
     @Override
     public double shortestPathDist(int src, int dest) {
         int node_num = this.nodes.size();
@@ -82,7 +103,7 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
 
         return this.nodes.get(dest).getSpv();
     }
-
+**/
 
     //third try
     /*
