@@ -1,30 +1,33 @@
 import api.GeoLocation;
+import api.NodeData;
 
 import java.util.LinkedList;
+import java.util.List;
 
-public class Node implements api.NodeData {
+public class Node implements api.NodeData, Comparable<Node> {
     final int WHITE = 0, GRAY = 1, BLACK = 2;
     int key;
     double nodeWeight;
     GeoLocationData cordinates;
-    int tagInfo, previusNodeId;
+    int tag, prevNodeID;
     LinkedList<Edge> incomingEdges = new LinkedList<Edge>();
+    List<NodeData> NL = new LinkedList<>();
     double spv; // Shortest path value (for the ShortestPath function)
 
     public Node() {
         this.cordinates = new GeoLocationData();
         this.key = 0;
-        this.tagInfo = WHITE;
+        this.tag = WHITE;
         this.nodeWeight = Integer.MAX_VALUE;
-        this.previusNodeId = -1;
+        this.prevNodeID = -1;
     }
 
     public Node(int key, GeoLocation L) {
         this.cordinates = (GeoLocationData) L;
         this.key = key;
-        this.tagInfo = WHITE;
+        this.tag = WHITE;
         this.nodeWeight = Integer.MAX_VALUE;
-        this.previusNodeId = -1;
+        this.prevNodeID = -1;
     }
 
     @Override
@@ -70,13 +73,13 @@ public class Node implements api.NodeData {
     @Override
     public int getTag() {
 
-        return this.tagInfo;
+        return this.tag;
     }
 
     @Override
     public void setTag(int t) {
 
-        this.tagInfo = t;
+        this.tag = t;
     }
 
     public String toString() {
@@ -91,4 +94,32 @@ public class Node implements api.NodeData {
         this.spv = spv;
     }
 
+    public void setPrevNodeID(int prevNodeID) {
+        this.prevNodeID = prevNodeID;
+    }
+
+    public int getPrevNodeID() {
+        return prevNodeID;
+    }
+
+    public double getNodeWeight() {
+        return nodeWeight;
+    }
+
+    public void setNodeWeight(double nodeWeight) {
+        this.nodeWeight = nodeWeight;
+    }
+
+    @Override
+    public int compareTo(Node n) {
+        return Double.compare(this.getNodeWeight(), n.getNodeWeight());
+    }
+
+    public void setNL(List<NodeData> NL) {
+        this.NL = NL;
+    }
+
+    public List<NodeData> getNL() {
+        return NL;
+    }
 }
