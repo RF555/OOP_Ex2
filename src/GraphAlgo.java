@@ -47,7 +47,7 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
     @Override
     public double shortestPathDist(int src, int dest) {
         Dijkstra(src, dest);
-        return this.nodes.get(dest).getNodeWeight();
+        return this.myGraph.nodes.get(dest).getNodeWeight();
     }
 
 /*
@@ -107,8 +107,31 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
     }
 **/
 
-    //Dijkstra
+    /*
+     * Dijkstra PseudoCode:
+     *      function dijkstra(G, S)
+     *          for each vertex V in G
+     *              distance[V] <- infinite
+     *              previous[V] <- NULL
+     *              If V != S, add V to Priority Queue Q
+     *          distance[S] <- 0
+     *
+     *          while Q IS NOT EMPTY
+     *              U <- Extract MIN from Q
+     *              for each unvisited neighbour V of U
+     *                  tempDistance <- distance[U] + edge_weight(U, V)
+     *                  if tempDistance < distance[V]
+     *                      distance[V] <- tempDistance
+     *                      previous[V] <- U
+     *          return distance[], previous[]
+     */
 
+    // Dijkstra #2
+    private void Dijkstra(int src, int dest) {
+
+    }
+    // Dijkstra #1
+    /*
     public void Dijkstra(int src, int dest) {
         int n = this.nodes.size();
         Iterator<NodeData> it_node = this.myGraph.nodeIter();
@@ -143,6 +166,8 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
         }
 
     }
+
+     **/
 
     //third try
 /*
@@ -350,5 +375,46 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
         }
         return counter;
     }
+
+    private EdgeData getEdge(int src, int dest) {
+        return this.myGraph.getEdge(src, dest);
+    }
+
+    private NodeData getNode(int nodeID) {
+        return this.myGraph.getNode(nodeID);
+    }
+
+    private double getNodeWeight(int nodeID) {
+        return this.myGraph.nodes.get(nodeID).getNodeWeight();
+    }
+
+    private void setNodeWeight(int nodeID, double w) {
+        this.myGraph.nodes.get(nodeID).setNodeWeight(w);
+    }
+
+    // WHITE (not visited) = 0, BLACK (visited) = 2
+    private int getNodeTag(int nodeID) {
+        return this.myGraph.nodes.get(nodeID).getTag();
+    }
+
+    // WHITE (not visited) = 0, BLACK (visited) = 2
+    private void setNodeTag(int nodeID, int tag) {
+        this.myGraph.nodes.get(nodeID).setTag(tag);
+    }
+
+    private int getPrevNodeID(int nodeID) {
+        return this.myGraph.nodes.get(nodeID).getPrevNodeID();
+    }
+
+    private void setPrevNodeID(int nodeID, int prevNodeID) {
+        this.myGraph.nodes.get(nodeID).setPrevNodeID(prevNodeID);
+    }
+
+    private NodeData getPrevNode(int nodeID) {
+        int prevID = getPrevNodeID(nodeID);
+        return getNode(prevID);
+    }
+
+
 }
 

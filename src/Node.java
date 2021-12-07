@@ -7,14 +7,14 @@ public class Node implements api.NodeData, Comparable<Node> {
     int key;
     double nodeWeight;
     GeoLocationData cordinates;
-    int tagInfo, prevNodeID;
+    int tag, prevNodeID;
     LinkedList<Edge> incomingEdges = new LinkedList<Edge>();
     double spv; // Shortest path value (for the ShortestPath function)
 
     public Node() {
         this.cordinates = new GeoLocationData();
         this.key = 0;
-        this.tagInfo = WHITE;
+        this.tag = WHITE;
         this.nodeWeight = Integer.MAX_VALUE;
         this.prevNodeID = -1;
     }
@@ -22,7 +22,7 @@ public class Node implements api.NodeData, Comparable<Node> {
     public Node(int key, GeoLocation L) {
         this.cordinates = (GeoLocationData) L;
         this.key = key;
-        this.tagInfo = WHITE;
+        this.tag = WHITE;
         this.nodeWeight = Integer.MAX_VALUE;
         this.prevNodeID = -1;
     }
@@ -70,13 +70,13 @@ public class Node implements api.NodeData, Comparable<Node> {
     @Override
     public int getTag() {
 
-        return this.tagInfo;
+        return this.tag;
     }
 
     @Override
     public void setTag(int t) {
 
-        this.tagInfo = t;
+        this.tag = t;
     }
 
     public String toString() {
