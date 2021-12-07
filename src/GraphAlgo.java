@@ -46,7 +46,7 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
     //most current - Dijkstra
     @Override
     public double shortestPathDist(int src, int dest) {
-        Dijkstra(src, dest);
+        Dijkstra(src);
         return this.myGraph.nodes.get(dest).getNodeWeight();
     }
 
@@ -127,7 +127,40 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
      */
 
     // Dijkstra #2
-    private void Dijkstra(int src, int dest) {
+    private void Dijkstra(int src) {
+        int node_num = this.myGraph.nodes.size();
+//        PriorityQueue<Node> pq = new PriorityQueue<>(this.nodes.size());
+        PriorityQueue<Edge> pq = new PriorityQueue<>();
+        this.myGraph.nodes.forEach((id, node) -> {
+            node.setTag(WHITE);
+            node.setPrevNodeID(-1);
+            node.setNodeWeight(Double.MAX_VALUE);
+//            if (node.getKey() != src)
+//                pq.add(node);
+        });
+        this.myGraph.nodes.get(src).setNodeWeight(0);
+//        pq.add(this.nodes.get(src));
+        this.myGraph.edegs.get(src).forEach((dest, edge) -> pq.add(edge));
+        int curr = src;
+        while (!pq.isEmpty()) {
+            setNodeTag(curr, BLACK);
+            int finalCurr = curr;
+            this.myGraph.edegs.get(curr).forEach((E_src, E) -> {
+                if (getNodeTag(E.getDest()) == WHITE) {
+//                    pq.add((Node) getNode(E.getDest()));
+                    pq.add(E);
+                    double tempW = getNodeWeight(finalCurr) + E.getWeight();
+                    if ((tempW < getNodeWeight(E.getDest()))) {
+                        setNodeWeight(E.getDest(), tempW);
+                        setPrevNodeID(E.getDest(), finalCurr);
+                    }
+                }
+            });
+            if (pq.peek() == null)
+                break;
+            else
+                curr = pq.poll().getDest();
+        }
 
     }
     // Dijkstra #1
