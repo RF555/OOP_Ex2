@@ -1,6 +1,8 @@
 import api.GeoLocation;
+import api.NodeData;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class Node implements api.NodeData, Comparable<Node> {
     final int WHITE = 0, GRAY = 1, BLACK = 2;
@@ -9,6 +11,7 @@ public class Node implements api.NodeData, Comparable<Node> {
     GeoLocationData cordinates;
     int tag, prevNodeID;
     LinkedList<Edge> incomingEdges = new LinkedList<Edge>();
+    List<NodeData> NL = new LinkedList<>();
     double spv; // Shortest path value (for the ShortestPath function)
 
     public Node() {
@@ -110,5 +113,13 @@ public class Node implements api.NodeData, Comparable<Node> {
     @Override
     public int compareTo(Node n) {
         return Double.compare(this.getNodeWeight(), n.getNodeWeight());
+    }
+
+    public void setNL(List<NodeData> NL) {
+        this.NL = NL;
+    }
+
+    public List<NodeData> getNL() {
+        return NL;
     }
 }
