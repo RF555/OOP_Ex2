@@ -1,6 +1,5 @@
 import api.*;
 
-import javax.management.Query;
 import java.util.*;
 
 public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
@@ -135,8 +134,10 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
             node.setNodeWeight(Double.MAX_VALUE);
         });
         this.myGraph.nodes.get(src).setNodeWeight(0);
-        List<NodeData> NL_src = new LinkedList<>();
-        NL_src.add(getNode(src));
+
+
+//        List<NodeData> NL_src = new LinkedList<>();
+//        NL_src.add(getNode(src));
 
 
 //        continue!!!!!!!!!!!!!!
@@ -152,10 +153,15 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
             this.myGraph.edegs.get(curr).forEach((E_src, E) -> {
                 if (getNodeTag(E.getDest()) == WHITE) {
                     pq.add(E);
-                    if (E.getSrc() == src) {
-                        tempList.add(getNode(E.getSrc()));
-                    } else
+                    if (finalCurr == src) {
+                        tempList.add(getNode(finalCurr));
+                    } else {
                         tempList.addAll(this.myGraph.nodes.get(finalCurr).getNL());
+////                        this.myGraph.nodes.get(finalCurr).getNL().forEach(node -> tempList.add(new Node(node)));
+//                        for (NodeData n:this.myGraph.nodes.get(finalCurr).getNL()) {
+//                            tempList.add(n);
+//                        }
+                    }
                     double tempW = getNodeWeight(finalCurr) + E.getWeight();
                     if ((tempW <= getNodeWeight(E.getDest()))) {
                         setNodeWeight(E.getDest(), tempW);
