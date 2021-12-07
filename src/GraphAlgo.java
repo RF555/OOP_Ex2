@@ -125,7 +125,7 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
      *          return distance[], previous[]
      */
 
-    // Dijkstra #2
+    // Dijkstra #3
     private void Dijkstra(int src) {
 //        PriorityQueue<Edge> pq = new PriorityQueue<>(); // queue for outgoing Edges
         // queue for all nodes
