@@ -1,5 +1,6 @@
 import api.GeoLocation;
 import api.NodeData;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -8,14 +9,13 @@ public class Node implements api.NodeData, Comparable<Node> {
     final int WHITE = 0, GRAY = 1, BLACK = 2;
     int key;
     double nodeWeight;
-    GeoLocationData cordinates;
+    GeoLocationData coordinates;
     int tag, prevNodeID;
     LinkedList<Edge> incomingEdges = new LinkedList<Edge>();
     List<NodeData> NL = new LinkedList<>();
-    double spv; // Shortest path value (for the ShortestPath function)
 
     public Node() {
-        this.cordinates = new GeoLocationData();
+        this.coordinates = new GeoLocationData();
         this.key = 0;
         this.tag = WHITE;
         this.nodeWeight = Integer.MAX_VALUE;
@@ -23,7 +23,7 @@ public class Node implements api.NodeData, Comparable<Node> {
     }
 
     public Node(int key, GeoLocation L) {
-        this.cordinates = (GeoLocationData) L;
+        this.coordinates = (GeoLocationData) L;
         this.key = key;
         this.tag = WHITE;
         this.nodeWeight = Integer.MAX_VALUE;
@@ -39,12 +39,12 @@ public class Node implements api.NodeData, Comparable<Node> {
     @Override
     public GeoLocation getLocation() {
 
-        return this.cordinates;
+        return this.coordinates;
     }
 
     @Override
     public void setLocation(GeoLocation p) {
-        this.cordinates = (GeoLocationData) p;
+        this.coordinates = (GeoLocationData) p;
     }
 
     @Override
@@ -86,14 +86,6 @@ public class Node implements api.NodeData, Comparable<Node> {
         return "Key:" + this.key;
     }
 
-    public double getSpv() {
-        return spv;
-    }
-
-    public void setSpv(double spv) {
-        this.spv = spv;
-    }
-
     public void setPrevNodeID(int prevNodeID) {
         this.prevNodeID = prevNodeID;
     }
@@ -102,24 +94,23 @@ public class Node implements api.NodeData, Comparable<Node> {
         return prevNodeID;
     }
 
-    public double getNodeWeight() {
-        return nodeWeight;
-    }
-
-    public void setNodeWeight(double nodeWeight) {
-        this.nodeWeight = nodeWeight;
-    }
-
-    @Override
-    public int compareTo(Node n) {
-        return Double.compare(this.getNodeWeight(), n.getNodeWeight());
-    }
-
     public void setNL(List<NodeData> NL) {
         this.NL = NL;
     }
 
     public List<NodeData> getNL() {
         return NL;
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        Node obj = (Node) that;
+        return (obj.getKey() == this.getKey());
+    }
+
+
+    @Override
+    public int compareTo(@NotNull Node o) {
+        return Integer.compare(o.getKey(), this.getKey());
     }
 }

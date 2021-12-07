@@ -46,7 +46,7 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
     @Override
     public double shortestPathDist(int src, int dest) {
         Dijkstra(src);
-        return this.myGraph.nodes.get(dest).getNodeWeight();
+        return this.myGraph.nodes.get(dest).getWeight();
     }
 
 /*
@@ -127,14 +127,23 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
 
     // Dijkstra #2
     private void Dijkstra(int src) {
-        PriorityQueue<Edge> pq = new PriorityQueue<>(); // queue for outgoing Edges
+//        PriorityQueue<Edge> pq = new PriorityQueue<>(); // queue for outgoing Edges
+        // queue for all nodes
+        PriorityQueue<Node> pq = new PriorityQueue<>(new Comparator<Node>() {
+            @Override
+            public int compare(Node o1, Node o2) {
+                return Double.compare(o1.getWeight(), o2.getWeight());
+            }
+        });
         this.myGraph.nodes.forEach((id, node) -> {
             node.setTag(WHITE);
             node.setPrevNodeID(-1);
-            node.setNodeWeight(Double.MAX_VALUE);
+            if (id == src) {
+                node.setWeight(0);
+                pq.add(node);
+            } else
+                node.setWeight(Double.MAX_VALUE);
         });
-        this.myGraph.nodes.get(src).setNodeWeight(0);
-
 
 //        List<NodeData> NL_src = new LinkedList<>();
 //        NL_src.add(getNode(src));
@@ -144,39 +153,47 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
 //        New List for every loop
 
 
-        this.myGraph.edegs.get(src).forEach((dest, edge) -> pq.add(edge));
+//        this.myGraph.edegs.get(src).forEach((dest, edge) -> pq.add(edge));
+//        int curr = Objects.requireNonNull(pq.poll()).getKey();
         int curr = src;
         while (!pq.isEmpty()) {
-            setNodeTag(curr, BLACK);
-            int finalCurr = curr;
-            List<NodeData> tempList = new LinkedList<>();
-            this.myGraph.edegs.get(curr).forEach((E_src, E) -> {
-                if (getNodeTag(E.getDest()) == WHITE) {
-                    pq.add(E);
-                    if (finalCurr == src) {
-                        tempList.add(getNode(finalCurr));
-                    } else {
-                        tempList.addAll(this.myGraph.nodes.get(finalCurr).getNL());
+            if (getNodeTag(curr) == WHITE) {
+                setNodeTag(curr, BLACK);
+                int finalCurr = curr;
+                List<NodeData> tempList = new LinkedList<>();
+                this.myGraph.edegs.get(curr).forEach((E_dest, E) -> {
+                    if (getNodeTag(E.getDest()) == WHITE) {
+//                        if (!pq_contain(pq, E.getDest()))
+                            pq.add((Node) getNode(E.getDest()));
+                        if (finalCurr == src) {
+                            tempList.add(getNode(finalCurr));
+                        } else {
+                            tempList.addAll(this.myGraph.nodes.get(finalCurr).getNL());
 ////                        this.myGraph.nodes.get(finalCurr).getNL().forEach(node -> tempList.add(new Node(node)));
 //                        for (NodeData n:this.myGraph.nodes.get(finalCurr).getNL()) {
 //                            tempList.add(n);
 //                        }
+                        }
+                        double tempW = getNodeWeight(finalCurr) + E.getWeight();
+                        if ((tempW <= getNodeWeight(E.getDest()))) {
+                            setNodeWeight(E.getDest(), tempW);
+                            setPrevNodeID(E.getDest(), finalCurr);
+                            this.myGraph.nodes.get(E.getDest()).setNL(new LinkedList<>(tempList));
+                            tempList.clear();
+                        }
+                        this.myGraph.nodes.get(E.getDest()).getNL().add(getNode(E.getDest()));
                     }
-                    double tempW = getNodeWeight(finalCurr) + E.getWeight();
-                    if ((tempW <= getNodeWeight(E.getDest()))) {
-                        setNodeWeight(E.getDest(), tempW);
-                        setPrevNodeID(E.getDest(), finalCurr);
-                        this.myGraph.nodes.get(E.getDest()).setNL(new LinkedList<>(tempList));
-                        tempList.clear();
-                    }
-                    this.myGraph.nodes.get(E.getDest()).getNL().add(getNode(E.getDest()));
-                }
 //                this.myGraph.nodes.get(E.getDest()).getNL().add(getNode(E.getDest()));
-            });
+                });
+            }
             if (pq.peek() == null)
                 break;
-            else
-                curr = pq.poll().getDest();
+            else if (pq.peek().getKey() == src) {
+                pq.poll();
+                curr = pq.poll().getKey();
+            } else
+                curr = pq.poll().getKey();
+//            curr = pq.poll().getDest();
         }
     }
     // Dijkstra #1
@@ -446,11 +463,11 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
     }
 
     private double getNodeWeight(int nodeID) {
-        return this.myGraph.nodes.get(nodeID).getNodeWeight();
+        return this.myGraph.nodes.get(nodeID).getWeight();
     }
 
     private void setNodeWeight(int nodeID, double w) {
-        this.myGraph.nodes.get(nodeID).setNodeWeight(w);
+        this.myGraph.nodes.get(nodeID).setWeight(w);
     }
 
     // WHITE (not visited) = 0, BLACK (visited) = 2
@@ -476,6 +493,14 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
         return getNode(prevID);
     }
 
+    private boolean pq_contain(PriorityQueue<Node> pq, int key) {
+        for (Node node : pq) {
+            if (node.getKey() == key) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }
 
