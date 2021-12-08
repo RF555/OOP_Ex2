@@ -1,10 +1,10 @@
-import org.junit.jupiter.api.Test;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class JSONTest {
+class JSONAlgoTest {
     //roeyf
 //    String st1 = "C:\\Users\\roeyf\\OneDrive - Ariel University\\Matanel&Roey\\Ex2-OOP\\data\\G1.json";
 //    String st2 = "C:\\Users\\roeyf\\OneDrive - Ariel University\\Matanel&Roey\\Ex2-OOP\\data\\G2.json";
