@@ -85,7 +85,6 @@ public class GraphAlgoTest {
         Assertions.assertEquals(ga2.shortestPathDist(2, 1), 5);
         Assertions.assertEquals(ga2.shortestPathDist(1, 4), 5);
         Assertions.assertEquals(ga2.shortestPathDist(3, 0), 11);
-
     }
 
     @Test
@@ -111,6 +110,5 @@ public class GraphAlgoTest {
         Assertions.assertEquals(nodeList30.get(1).getKey(),2);
         Assertions.assertEquals(nodeList30.get(2).getKey(),1);
         Assertions.assertEquals(nodeList30.get(3).getKey(),0);
-
     }
 }
