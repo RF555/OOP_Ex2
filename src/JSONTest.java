@@ -49,6 +49,55 @@ class JSONTest {
         assertSame(G3_json.graphObj.getClass(), JSONObject.class);
     }
 
+    //crate DWGraph g1
+    DWGraph g1_DWGraph = new DWGraph(g1);
+    DWGraph g2_DWGraph = new DWGraph(g2);
+
+    @Test
+    void constructDWGraphTest() {
+        //g1
+        assertEquals(g1_DWGraph.nodes.get(0).getKey(), 0);
+        assertEquals(g1_DWGraph.nodes.get(1).getKey(), 1);
+        assertEquals(g1_DWGraph.nodes.get(2).getKey(), 2);
+        assertEquals(g1_DWGraph.nodes.get(3).getKey(), 3);
+        assertNotEquals(g1_DWGraph.getEdge(0, 1), null);
+        assertNotEquals(g1_DWGraph.getEdge(1, 0), null);
+        assertNotEquals(g1_DWGraph.getEdge(1, 2), null);
+        assertNotEquals(g1_DWGraph.getEdge(2, 1), null);
+        assertNotEquals(g1_DWGraph.getEdge(2, 3), null);
+        assertNotEquals(g1_DWGraph.getEdge(3, 2), null);
+        //g2
+        assertEquals(g2_DWGraph.nodes.get(0).getKey(), 0);
+        assertEquals(g2_DWGraph.nodes.get(1).getKey(), 1);
+        assertEquals(g2_DWGraph.nodes.get(2).getKey(), 2);
+        assertEquals(g2_DWGraph.nodes.get(3).getKey(), 3);
+        assertEquals(g2_DWGraph.nodes.get(4).getKey(), 4);
+        assertNotEquals(g2_DWGraph.getEdge(0, 1), null);
+        assertNotEquals(g2_DWGraph.getEdge(0, 2), null);
+        assertNotEquals(g2_DWGraph.getEdge(1, 2), null);
+        assertNotEquals(g2_DWGraph.getEdge(1, 3), null);
+        assertNotEquals(g2_DWGraph.getEdge(2, 0), null);
+        assertNotEquals(g2_DWGraph.getEdge(2, 3), null);
+        assertNotEquals(g2_DWGraph.getEdge(2, 4), null);
+        assertNotEquals(g2_DWGraph.getEdge(3, 1), null);
+        assertNotEquals(g2_DWGraph.getEdge(3, 2), null);
+        assertNotEquals(g2_DWGraph.getEdge(4, 3), null);
+
+        assertEquals(g2_DWGraph.getEdge(0, 1).getWeight(), 3);
+        assertEquals(g2_DWGraph.getEdge(0, 2).getWeight(), 8);
+        assertEquals(g2_DWGraph.getEdge(1, 2).getWeight(), 3);
+        assertEquals(g2_DWGraph.getEdge(1, 3).getWeight(), 11);
+        assertEquals(g2_DWGraph.getEdge(2, 0).getWeight(), 7);
+        assertEquals(g2_DWGraph.getEdge(2, 3).getWeight(), 7);
+        assertEquals(g2_DWGraph.getEdge(2, 4).getWeight(), 2);
+        assertEquals(g2_DWGraph.getEdge(3, 1).getWeight(), 2);
+        assertEquals(g2_DWGraph.getEdge(3, 2).getWeight(), 4);
+        assertEquals(g2_DWGraph.getEdge(4, 3).getWeight(), 1);
+
+
+    }
+
+
     @Test
     void generateNodeTest() {
         for (int i = 0; i < g1_json.NodeJsonArr.length(); i++) {

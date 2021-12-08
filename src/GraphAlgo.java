@@ -1,8 +1,7 @@
 import api.*;
 
-import javax.management.Query;
-import java.io.FileNotFoundException;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
     final int WHITE = 0, GRAY = 1, BLACK = 2;
@@ -15,8 +14,13 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
         init(g);
         this.nodes = g.nodes;
         this.edegs = g.edegs;
-
     }
+
+    public GraphAlgo() {
+        this.nodes = new HashMap<Integer, Node>();
+        this.edegs = new HashMap<Integer, HashMap<Integer, Edge>>();
+    }
+
 
     @Override
     public void init(DirectedWeightedGraph g) {
@@ -427,7 +431,10 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
 
     @Override
     public boolean load(String file) {
-        JSON j = new JSON(file);
+//        JSON j = new JSON(file);
+        this.myGraph = new DWGraph(file);
+        this.nodes = this.myGraph.nodes;
+        this.edegs = this.myGraph.edegs;
         return true;
 
     }
@@ -512,5 +519,42 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
     }
 
 
+//    @Override
+//    public int compareTo(GraphAlgo otherGraph) {
+//        EdgeData tempEdge;
+//        return this.myGraph.edegs.forEach((src, destMap) ->
+//                destMap.forEach((dest, edge) -> {
+//                    tempEdge = otherGraph.getEdge(src, dest);
+//                    if (tempEdge == null)
+//                        return -1;
+//                    else if (!(edge.getWeight() == tempEdge.getWeight())) return edge.compareTo((Edge) tempEdge);
+//                };
+//                ));
+//    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!(obj instanceof DirectedWeightedGraphAlgorithms g))
+            return false;
+//         tempEdge;
+        AtomicBoolean ans = new AtomicBoolean(false);
+        this.myGraph.edegs.forEach((src, destMap) ->
+                destMap.forEach((dest, edge) -> {
+                            EdgeData tempEdge = g.getGraph().getEdge(src, dest);
+                            if (tempEdge == null) {
+                                ans.set(false);
+                                return;
+                            } else if (edge.getWeight() != tempEdge.getWeight()) {
+                                if (!edge.equals((Edge) tempEdge)) {
+                                    ans.set(false);
+                                    return;
+                                }
+                            }
+                        }
+                ));
+        return ans.get();
+    }
 }
 

@@ -11,8 +11,8 @@ import java.util.Scanner;
 
 
 public class JSON {
-    JSONArray NodeJsonArr;
-    JSONArray EdgeJsonArr;
+    JSONArray NodeJsonArr=new JSONArray();
+    JSONArray EdgeJsonArr=new JSONArray();
     JSONObject graphObj;
     int nodeCount;
     int edgeCount;
@@ -35,8 +35,8 @@ public class JSON {
     // NEED TO TEST!!!
     public JSON(DWGraph g) { // Constructor of JSON from graph object
         try {
-            this.NodeJsonArr = new JSONArray(g.nodes);
-            this.EdgeJsonArr = new JSONArray(g.edegs);
+            this.NodeJsonArr = new JSONArray(g.nodes.values());
+            this.EdgeJsonArr = new JSONArray(g.edegs.values());
             String string_g = "{\"Edges\":" + this.EdgeJsonArr.toString() + ",\"Nodes\":" + this.NodeJsonArr.toString() + "}";
             this.graphObj = new JSONObject(string_g);
         } catch (NullPointerException e) {

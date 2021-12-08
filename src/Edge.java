@@ -1,4 +1,6 @@
-public class Edge implements api.EdgeData, Comparable<Edge> {
+import api.EdgeData;
+
+public class Edge implements api.EdgeData, Comparable<EdgeData> {
     final int WHITE = 0, GRAY = 1, BLACK = 2;
     int source, destination;
     double weight;
@@ -63,8 +65,18 @@ public class Edge implements api.EdgeData, Comparable<Edge> {
     }
 
     @Override
-    public int compareTo(Edge e) {
+    public int compareTo(EdgeData e) {
         return Double.compare(this.getWeight(), e.getWeight());
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!(obj instanceof EdgeData e))
+            return false;
+        if (e.getSrc() != this.getSrc() || e.getDest() != this.getDest())
+            return false;
+        return Double.compare(this.getWeight(), e.getWeight()) == 0;
+    }
 }
