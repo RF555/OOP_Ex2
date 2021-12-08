@@ -17,10 +17,25 @@ public class GraphAlgoTest {
 //    GraphAlgo ga1 = new GraphAlgo(new DWGraph(sg1));
 //    GraphAlgo ga2 = new GraphAlgo(new DWGraph(sg2));
 
-    String sg1 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\g1.json";
-    String sg2 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\g2.json";
-    GraphAlgo ga1 = new GraphAlgo(new DWGraph(sg1));
-    GraphAlgo ga2 = new GraphAlgo(new DWGraph(sg2));
+    //roeyf
+//    String st1 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\data\\G1.json";
+//    String st2 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\data\\G2.json";
+//    String st3 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\data\\G3.json";
+//    String g1 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\g1.json";
+//    String g2 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\g2.json";
+
+    //Roey
+    String G1 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\data\\G1.json";
+    String G2 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\data\\G2.json";
+    String G3 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\data\\G3.json";
+    String g1 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\g1.json";
+    String g2 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\g2.json";
+
+    GraphAlgo ga1 = new GraphAlgo(new DWGraph(g1));
+    GraphAlgo ga2 = new GraphAlgo(new DWGraph(g2));
+    GraphAlgo Ga1 = new GraphAlgo(new DWGraph(G1));
+    GraphAlgo Ga2 = new GraphAlgo(new DWGraph(G1));
+    GraphAlgo Ga3 = new GraphAlgo(new DWGraph(G3));
 
 //    String g1 = "C:\\Users\\Matanel\\IdeaProjects\\OOP=Ex3\\src\\jsonFiles\\g1.json";
 //    DWGraph MyGraph = new DWGraph(g1);
@@ -110,5 +125,20 @@ public class GraphAlgoTest {
         Assertions.assertEquals(nodeList30.get(1).getKey(),2);
         Assertions.assertEquals(nodeList30.get(2).getKey(),1);
         Assertions.assertEquals(nodeList30.get(3).getKey(),0);
+    }
+
+    String g1000 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\1000Nodes.json";
+    GraphAlgo ga1000 = new GraphAlgo(new DWGraph(g1000));
+    String g10000 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\10000Nodes.json";
+    GraphAlgo ga10000 = new GraphAlgo(new DWGraph(g10000));
+
+
+    @Test
+    void centerTest() {
+        Assertions.assertEquals(Ga1.center().getKey(), 15);
+        Assertions.assertEquals(ga1.center().getKey(), 1);
+//        Assertions.assertEquals(ga1.center().getKey(), );
+//        Assertions.assertEquals(ga1000.center().getKey(),362);
+//        Assertions.assertEquals(ga10000.center().getKey(),3846);
     }
 }

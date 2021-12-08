@@ -46,14 +46,15 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
         }
         return false;
     }
+
     // Dijkstra-matanel
     @Override
     public double shortestPathDist(int src, int dest) {
         if (this.myGraph.nodeSize() == 0 || this.myGraph.getNode(src) == null || this.myGraph.getNode(dest) == null)
             return -1;
-        if (src == dest )
+        if (src == dest)
             return 0;
-        List <NodeData> path = this.shortestPath(src,dest);
+        List<NodeData> path = this.shortestPath(src, dest);
         if (path == null)
             return -1;
         if (path.get(0) == this.myGraph.getNode(src))
@@ -71,7 +72,7 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
         };
         Iterator<NodeData> resetnodes = this.myGraph.nodeIter();
         while (resetnodes.hasNext()) {
-            Node r =(Node) resetnodes.next();
+            Node r = (Node) resetnodes.next();
             r.setWeight(Double.MAX_VALUE);
             r.setTag(0);
         }
@@ -92,7 +93,7 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
                         Edge temp = (Edge) this.myGraph.getEdge(curr.getKey(), n.getKey());
                         if (temp != null && temp.getWeight() + curr.nodeWeight < n.nodeWeight) {
                             n.setWeight((temp.getWeight() + curr.nodeWeight));
-                            if (parents.containsKey(n.getKey())){
+                            if (parents.containsKey(n.getKey())) {
                                 parents.remove(n.getKey());
                             }
                             parents.put(n.getKey(), curr.getKey());
@@ -132,30 +133,40 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
 
     @Override
     public NodeData center() {
-        double minMaxDist = Double.MAX_VALUE;
+        double centerDist = Double.MAX_VALUE;
         Iterator<NodeData> it1 = this.myGraph.nodeIter();
-        NodeData curr;
-        NodeData tempC = new Node(-1, new GeoLocationData(0, 0, 0));
+        NodeData curr_src;
+        NodeData tempCenter = new Node(-1, new GeoLocationData(0, 0, 0));
         while (it1.hasNext()) {
-            curr = it1.next();
-            shortestPathDist(curr.getKey(),this.myGraph.edegs.get(curr.getKey()).);
+            curr_src = it1.next();
             Iterator<NodeData> it2 = this.myGraph.nodeIter();
             double maxDist = -1;
-            NodeData tempMax = new Node(-1, new GeoLocationData(0, 0, 0));
+            double currDist = -1;
+            NodeData curr_dest = new Node(-1, new GeoLocationData(0, 0, 0));
+            NodeData curr_maxNode = new Node(-1, new GeoLocationData(0, 0, 0));
             while (it2.hasNext()) {
-                NodeData tempIt = it2.next();
-                if (tempIt.getWeight() < Double.MAX_VALUE)
-                    if (tempIt.getWeight() > maxDist) {
-                        maxDist = tempIt.getWeight();
-                        tempMax = tempIt;
+                curr_dest = it2.next();
+                currDist = shortestPathDist(curr_src.getKey(), curr_dest.getKey());
+                if(currDist<Double.MAX_VALUE){
+                    if(currDist>maxDist){
+                        maxDist=currDist;
+                        curr_maxNode=curr_dest;
                     }
+                }
+
+//                NodeData tempIt = it2.next();
+//                if (tempIt.getWeight() < Double.MAX_VALUE)
+//                    if (tempIt.getWeight() > maxDist) {
+//                        maxDist = tempIt.getWeight();
+//                        curr_dest = tempIt;
+//                    }
             }
-            if (maxDist < minMaxDist) {
-                minMaxDist = maxDist;
-                tempC = tempMax;
+            if (maxDist < centerDist) {
+                centerDist = maxDist;
+                tempCenter = curr_maxNode;
             }
         }
-        return tempC;
+        return tempCenter;
     }
 
     @Override
