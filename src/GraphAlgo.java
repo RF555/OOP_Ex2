@@ -48,12 +48,12 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
         return false;
     }
 
-    //most current - Dijkstra
-    @Override
-    public double shortestPathDist(int src, int dest) {
-        Dijkstra(src);
-        return this.myGraph.nodes.get(dest).getNodeWeight();
-    }
+//    //most current - Dijkstra
+//    @Override
+//    public double shortestPathDist(int src, int dest) {
+//        Dijkstra(src);
+//        return this.myGraph.nodes.get(dest).getNodeWeight();
+//    }
 
 /*
     @Override
@@ -131,7 +131,81 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
      *          return distance[], previous[]
      */
 
-    // Dijkstra #2
+    // Dijkstra-matanel
+    @Override
+    public double shortestPathDist(int src, int dest) {
+        if (this.myGraph.nodeSize() == 0 || this.myGraph.getNode(src) == null || this.myGraph.getNode(dest) == null)
+            return -1;
+        if (src == dest )
+            return 0;
+        List <NodeData> path = this.shortestPath(src,dest);
+        if (path == null)
+            return -1;
+        if (path.get(0) == this.myGraph.getNode(src))
+            return this.myGraph.getNode(dest).getWeight();
+        return 0;
+    }
+
+    @Override
+    public List<NodeData> shortestPath(int src, int dest) {
+        Comparator<NodeData> lessWeight = new Comparator<>() {
+            @Override
+            public int compare(NodeData node1, NodeData node2) {
+                return Double.compare(node1.getWeight(), node2.getWeight());
+            }
+        };
+        Iterator<NodeData> resetnodes = this.myGraph.nodeIter();
+        while (resetnodes.hasNext()) {
+            Node r =(Node) resetnodes.next();
+            r.setWeight(Double.MAX_VALUE);
+            r.setTag(0);
+        }
+        PriorityQueue<Node> q = new PriorityQueue<>(lessWeight);
+        HashMap<Integer, Integer> parents = new HashMap();
+        Node tempnode = (Node) this.myGraph.getNode(src);
+        q.add(tempnode);
+        tempnode.nodeWeight = 0;
+        while (!q.isEmpty()) {
+            Node curr = q.poll();
+            if (curr.getTag() == 0) {
+                curr.setTag(1);
+                if (curr.getKey() == dest) break;
+                Iterator<NodeData> it = this.myGraph.nodeIter();
+                while (it.hasNext()) {
+                    Node n = (Node) it.next();
+                    if (n.getTag() == 0) {
+                        Edge temp = (Edge) this.myGraph.getEdge(curr.getKey(), n.getKey());
+                        if (temp != null && temp.getWeight() + curr.nodeWeight < n.nodeWeight) {
+                            n.setWeight((temp.getWeight() + curr.nodeWeight));
+                            if (parents.containsKey(n.getKey())){
+                                parents.remove(n.getKey());
+                            }
+                            parents.put(n.getKey(), curr.getKey());
+                            if (!q.contains(n))
+                                q.add(n);
+                        }
+                    }
+                }
+            }
+        }
+        List<Node> path = new ArrayList<>();
+        if (this.myGraph.getNode(dest).getWeight() == Double.MAX_VALUE)
+            return null;
+        int assemble = dest;
+        while (assemble != src) {
+            Node par = (Node) this.myGraph.getNode(assemble);
+            path.add(par);
+            assemble = parents.get(assemble);
+        }
+        path.add((Node) this.myGraph.getNode(src));
+        List<NodeData> reversedpath = new ArrayList<>();
+        for (int i = path.size() - 1; i >= 0; i--) {
+            reversedpath.add(path.get(i));
+        }
+        return reversedpath;
+    }
+
+    // Dijkstra #2-roey
     private void Dijkstra(int src) {
 //        PriorityQueue<Node> pq = new PriorityQueue<>(this.nodes.size());
         PriorityQueue<Edge> pq = new PriorityQueue<>(new Comparator<Edge>() {
@@ -365,21 +439,21 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
 
     }
 **/
-    @Override
-    public List<NodeData> shortestPath(int src, int dest) {
-        Dijkstra(src);
-        List<NodeData> NL = new ArrayList<>();
-        if (getNodeWeight(dest) == Integer.MAX_VALUE)
-            return null;
-        else {
-//            NL.add(getNode(dest));
-//            while (NL.get(0).getKey() != src) {
-//                NL.add(getPrevNode(NL.get(0).getKey()));
-//            }
-//            return NL;
-            return removeDup(this.myGraph.nodes.get(dest).getNL());
-        }
-    }
+//    @Override
+//    public List<NodeData> shortestPath(int src, int dest) {
+//        Dijkstra(src);
+//        List<NodeData> NL = new ArrayList<>();
+//        if (getNodeWeight(dest) == Integer.MAX_VALUE)
+//            return null;
+//        else {
+////            NL.add(getNode(dest));
+////            while (NL.get(0).getKey() != src) {
+////                NL.add(getPrevNode(NL.get(0).getKey()));
+////            }
+////            return NL;
+//            return removeDup(this.myGraph.nodes.get(dest).getNL());
+//        }
+//    }
 
     private List<NodeData> removeDup(List<NodeData> NL) {
         List<NodeData> new_list = new LinkedList<>();
