@@ -128,7 +128,6 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
 
     // Dijkstra #2
     private void Dijkstra(int src) {
-        int node_num = this.myGraph.nodes.size();
 //        PriorityQueue<Node> pq = new PriorityQueue<>(this.nodes.size());
         PriorityQueue<Edge> pq = new PriorityQueue<>();
         this.myGraph.nodes.forEach((id, node) -> {
@@ -140,19 +139,31 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
         });
         this.myGraph.nodes.get(src).setNodeWeight(0);
 //        pq.add(this.nodes.get(src));
+        List<NodeData> NL_src = new LinkedList<>();
+        NL_src.add(getNode(src));
+
+
+//        continue!!!!!!!!!!!!!!
+//        New List for every loop
+
+
         this.myGraph.edegs.get(src).forEach((dest, edge) -> pq.add(edge));
         int curr = src;
         while (!pq.isEmpty()) {
             setNodeTag(curr, BLACK);
             int finalCurr = curr;
+            List<NodeData> tempList = new LinkedList<>(this.myGraph.nodes.get(finalCurr).getNL());
             this.myGraph.edegs.get(curr).forEach((E_src, E) -> {
                 if (getNodeTag(E.getDest()) == WHITE) {
-//                    pq.add((Node) getNode(E.getDest()));
                     pq.add(E);
                     double tempW = getNodeWeight(finalCurr) + E.getWeight();
-                    if ((tempW < getNodeWeight(E.getDest()))) {
+                    if ((tempW <= getNodeWeight(E.getDest()))) {
                         setNodeWeight(E.getDest(), tempW);
+//                        List<NodeData> tempList = new LinkedList<>(this.myGraph.nodes.get(E.getSrc()).getNL());
+//                        tempList.add(getNode(E.getDest()));
                         setPrevNodeID(E.getDest(), finalCurr);
+                        this.myGraph.nodes.get(E.getDest()).setNL(tempList);
+                        this.myGraph.nodes.get(E.getDest()).getNL().add(getNode(E.getDest()));
                     }
                 }
             });
@@ -161,7 +172,6 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
             else
                 curr = pq.poll().getDest();
         }
-
     }
     // Dijkstra #1
     /*
@@ -345,7 +355,19 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
 **/
     @Override
     public List<NodeData> shortestPath(int src, int dest) {
-        return null;
+        Dijkstra(src);
+        List<NodeData> NL = new LinkedList<>();
+        if (getNodeWeight(dest) == Integer.MAX_VALUE)
+            return null;
+        else {
+//            NL.add(getNode(dest));
+//            while (NL.get(0).getKey() != src) {
+//                NL.add(getPrevNode(NL.get(0).getKey()));
+//            }
+//            return NL;
+            this.myGraph.nodes.get(dest).getNL().add(0, getNode(src));
+            return this.myGraph.nodes.get(dest).getNL();
+        }
     }
 
 
