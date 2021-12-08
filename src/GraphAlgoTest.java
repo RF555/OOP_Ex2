@@ -79,6 +79,9 @@ public class GraphAlgoTest {
         Assertions.assertEquals(ga2.shortestPathDist(1, 3), 6);
         Assertions.assertEquals(ga2.shortestPathDist(0, 4), 8);
         Assertions.assertEquals(ga2.shortestPathDist(4, 0), 12);
+        Assertions.assertEquals(ga2.shortestPathDist(2, 1), 5);
+        Assertions.assertEquals(ga2.shortestPathDist(1, 4), 5);
+        Assertions.assertEquals(ga2.shortestPathDist(3, 0), 11);
 
     }
 
@@ -91,6 +94,10 @@ public class GraphAlgoTest {
         Assertions.assertEquals(nodeList02.get(0).getKey(),0);
         Assertions.assertEquals(nodeList02.get(1).getKey(),1);
         Assertions.assertEquals(nodeList02.get(2).getKey(),2);
+        List<NodeData> nodeList20= ga1.shortestPath(2,0);
+        Assertions.assertEquals(nodeList20.get(0).getKey(),2);
+        Assertions.assertEquals(nodeList20.get(1).getKey(),1);
+        Assertions.assertEquals(nodeList20.get(2).getKey(),0);
         List<NodeData> nodeList03= ga1.shortestPath(0,3);
         Assertions.assertEquals(nodeList03.get(0).getKey(),0);
         Assertions.assertEquals(nodeList03.get(1).getKey(),1);

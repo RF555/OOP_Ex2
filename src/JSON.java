@@ -121,4 +121,14 @@ public class JSON {
         }
     }
 
+    public boolean toJSONFileBool(String fileName) {//Enter file name+path
+        try (FileWriter file = new FileWriter(fileName)) {
+            file.write(this.graphObj.toString());
+            file.flush();
+            return true;
+        } catch (IOException e) {
+            e.fillInStackTrace();
+            return false;
+        }
+    }
 }
