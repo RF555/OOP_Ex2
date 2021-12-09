@@ -34,6 +34,19 @@ public class DWGraph implements api.DirectedWeightedGraph {
         this.mc = 0;
     }
 
+    public DWGraph(JSON json) {
+        this.iterFlag = false;
+        edgesNumber = 0;
+        this.mc = 0;
+        this.corners[0] = Double.MAX_VALUE;
+        this.corners[1] = 0;
+        this.corners[2] = Double.MAX_VALUE;
+        this.corners[3] = 0;
+        json.import_all_nodes(this);
+        json.import_all_edges(this);
+        this.mc = 0;
+    }
+
     @Override
     public NodeData getNode(int key) {
         if (this.nodes.containsKey(key))

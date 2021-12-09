@@ -6,18 +6,18 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
     final int WHITE = 0, GRAY = 1, BLACK = 2;
     DWGraph myGraph;
-    HashMap<Integer, Node> nodes;
-    HashMap<Integer, HashMap<Integer, Edge>> edegs;
+    HashMap<Integer, Node> nodesMap;
+    HashMap<Integer, HashMap<Integer, Edge>> edgesMap;
 
     public GraphAlgo(DWGraph g) {
         init(g);
-        this.nodes = g.nodes;
-        this.edegs = g.edegs;
+        this.nodesMap = g.nodes;
+        this.edgesMap = g.edegs;
     }
 
     public GraphAlgo() {
-        this.nodes = new HashMap<Integer, Node>();
-        this.edegs = new HashMap<Integer, HashMap<Integer, Edge>>();
+        this.nodesMap = new HashMap<Integer, Node>();
+        this.edgesMap = new HashMap<Integer, HashMap<Integer, Edge>>();
     }
 
 
@@ -31,20 +31,38 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
         return null;
     }
 
+    //Roey's implementation
     @Override
     public DirectedWeightedGraph copy() {
-        JSON json =new JSON(this.myGraph);
-        DirectedWeightedGraph newGraph=new DWGraph(json);
-        return null;
+        JSON json = new JSON(this.myGraph);
+        return new DWGraph(json);
     }
+
+    //Matanel's implementation
+//    @Override
+//    public DirectedWeightedGraph copy() {
+//        DirectedWeightedGraph copy_graph = new DWGraph();
+//        Iterator<NodeData> nodeIt = this.myGraph.nodeIter();
+//        while(nodeIt.hasNext()) {
+//            Node temp = (Node) nodeIt.next();
+//            NodeData temp_node = new Node(temp);
+//            copy_graph.addNode(temp_node);
+//        }
+//        Iterator<EdgeData> edgeIt = this.myGraph.edgeIter();
+//        while(edgeIt.hasNext()) {
+//            Edge temp = (Edge) edgeIt.next();
+//            EdgeData temp_edge = new Edge(temp);
+//            copy_graph.connect(temp_edge.getSrc(), temp_edge.getDest(), temp_edge.getWeight());
+//        }
+//        return copy_graph;
+//    }
+
 
     @Override
     public boolean isConnected() {
         if (DFS(this.myGraph) == 1) {
             DWGraph tempGraph = GraphTraspose(this.myGraph);
-            if (DFS(tempGraph) == 1) {
-                return true;
-            }
+            return DFS(tempGraph) == 1;
         }
         return false;
     }
@@ -157,17 +175,49 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
         return NL;
     }
 
-    // all mutations solution
+    // OR TRY - all mutations solution
+
+
     @Override
     public List<NodeData> tsp(List<NodeData> cities) {
-
-        return null;
+        double min = Double.POSITIVE_INFINITY;
+        List<NodeData> returnedPath = new ArrayList<>();
+        Iterator<NodeData> srcIt = cities.listIterator();
+        while (srcIt.hasNext()) {
+            NodeData curr = srcIt.next();
+            Comparator<NodeData> lessWeight = new Comparator<>() {
+                @Override
+                public int compare(NodeData node1, NodeData node2) {
+                    return Double.compare(shortestPathDist(curr.getKey(), node1.getKey()), shortestPathDist(curr.getKey(), node2.getKey()));
+                }
+            };
+            PriorityQueue<NodeData> pQueue = new PriorityQueue<>(lessWeight);
+            Iterator<NodeData> dstIt = cities.listIterator();
+            while (dstIt.hasNext()) {
+                NodeData tmp = dstIt.next();
+                if (curr.getKey() != tmp.getKey())
+                    pQueue.add(tmp);
+            }
+            double sum = 0;
+            List<NodeData> tempPath = new ArrayList<>();
+            NodeData tempCurr = curr;
+            tempPath.add(curr);
+            while (!pQueue.isEmpty()) {
+                sum = sum + shortestPathDist(tempCurr.getKey(), pQueue.peek().getKey());
+                tempCurr = pQueue.peek();
+                tempPath.add(pQueue.poll());
+            }
+            if (sum < min) {
+                min = sum;
+                returnedPath = tempPath;
+            }
+        }
+        return returnedPath;
     }
 
     @Override
     public boolean save(String file) {
         JSON j = new JSON(this.myGraph);
-//        return j.toJSONFileBool(file);
         j.toJSONFile(file);
         return true;
     }
@@ -175,10 +225,9 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
     @Override
     public boolean load(String file) {
         this.myGraph = new DWGraph(file);
-        this.nodes = this.myGraph.nodes;
-        this.edegs = this.myGraph.edegs;
+        this.nodesMap = this.myGraph.nodes;
+        this.edgesMap = this.myGraph.edegs;
         return true;
-
     }
 
     private DWGraph GraphTraspose(DWGraph g) {
@@ -221,17 +270,6 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
         return counter;
     }
 
-    private EdgeData getEdge(int src, int dest) {
-        return this.myGraph.getEdge(src, dest);
-    }
-
-    private double getEdgeW(Node src, Node dest) {
-        return this.myGraph.getEdge(src.getKey(), dest.getKey()).getWeight();
-    }
-
-    private NodeData getNodeData(int nodeID) {
-        return this.myGraph.getNode(nodeID);
-    }
 
     private Node getNode(int nodeID) {
         return (Node) this.myGraph.getNode(nodeID);
@@ -239,10 +277,6 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
 
     private double getNodeWeight(int nodeID) {
         return this.myGraph.nodes.get(nodeID).getWeight();
-    }
-
-    private void setNodeWeight(int nodeID, double w) {
-        this.myGraph.nodes.get(nodeID).setWeight(w);
     }
 
     // WHITE (not visited) = 0, BLACK (visited) = 2
@@ -284,11 +318,9 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
                             EdgeData tempEdge = g.getGraph().getEdge(src, dest);
                             if (tempEdge == null) {
                                 ans.set(false);
-                                return;
                             } else if (edge.getWeight() != tempEdge.getWeight()) {
                                 if (!edge.equals((Edge) tempEdge)) {
                                     ans.set(false);
-                                    return;
                                 }
                             }
                         }

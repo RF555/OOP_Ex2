@@ -21,7 +21,6 @@ public class JSON {
         String myJson = null;
         try {
             myJson = new Scanner(new File(jsonFile)).useDelimiter("\\Z").next();
-
             this.graphObj = new JSONObject(myJson);
             this.NodeJsonArr = graphObj.getJSONArray("Nodes");
             this.EdgeJsonArr = graphObj.getJSONArray("Edges");
@@ -32,7 +31,6 @@ public class JSON {
         }
     }
 
-    // NEED TO TEST!!!
     public JSON(DWGraph g) { // Constructor of JSON from graph object
         try {
 //            ArrayList<Edge> edges = new ArrayList<>();
@@ -79,16 +77,6 @@ public class JSON {
     public Node generateNode(JSONObject nodeObj) { //index of node
         return new Node(nodeObj);
     }
-
-//    public Node generateNode(JSONObject nodeObj) { //index of node
-//        int id = nodeObj.getInt("id");
-//        String[] stGeo = nodeObj.getString("pos").split(",");
-//        GeoLocationData gld = new GeoLocationData(Double.parseDouble(stGeo[0]), Double.parseDouble(stGeo[1]), Double.parseDouble(stGeo[2]));
-//        double nodeWeight = nodeObj.getDouble("nodeWeight");
-//        int prevNodeID = nodeObj.getInt("prevNodeID");
-//        ++nodeCount;
-//        return new Node(id, gld);
-//    }
 
     public Edge generateEdge(int edge_index) { //index of edge
         JSONObject edgeObj = this.EdgeJsonArr.getJSONObject(edge_index);
@@ -138,14 +126,4 @@ public class JSON {
         }
     }
 
-    public boolean toJSONFileBool(String fileName) {//Enter file name+path
-        try (FileWriter file = new FileWriter(fileName)) {
-            file.write(this.graphObj.toString());
-            file.flush();
-            return true;
-        } catch (IOException e) {
-            e.fillInStackTrace();
-            return false;
-        }
-    }
 }
