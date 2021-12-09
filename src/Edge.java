@@ -5,6 +5,7 @@ public class Edge implements api.EdgeData, Comparable<EdgeData> {
     int source, destination;
     double weight;
     int tagInfo;
+    String info;
 
     public Edge() {
         this.destination = 0;
@@ -19,19 +20,24 @@ public class Edge implements api.EdgeData, Comparable<EdgeData> {
         this.destination = dst;
         this.tagInfo = WHITE;
     }
-    public double getW() {
-        return this.weight;
+
+    /**
+     * Copy Constructors
+     */
+    public Edge(Edge other) {
+        this.source = other.source;
+        this.weight = other.weight;
+        this.destination = other.destination;
+        this.tagInfo = other.tagInfo;
     }
 
     @Override
     public int getSrc() {
-
         return this.source;
     }
 
     @Override
     public int getDest() {
-
         return this.destination;
     }
 
@@ -40,26 +46,24 @@ public class Edge implements api.EdgeData, Comparable<EdgeData> {
         return this.weight;
     }
 
-
     @Override
     public String getInfo() {
-
-        return null;
+        return toString();
     }
 
     @Override
     public void setInfo(String s) {
+        this.info = s;
+    }
 
+    public double getW() {
+        return this.weight;
     }
 
     @Override
     public int getTag() {
 
         return this.tagInfo;
-    }
-
-    public String toString() {
-        return ("\n    {\n      \"src\": " + this.source + ",\n      \"w\": " + this.weight + ",\n      \"dest\": " + this.destination + "\n    }");
     }
 
     @Override
@@ -82,4 +86,9 @@ public class Edge implements api.EdgeData, Comparable<EdgeData> {
             return false;
         return Double.compare(this.getWeight(), e.getWeight()) == 0;
     }
+
+    public String toString() {
+        return ("\n    {\n      \"src\": " + this.source + ",\n      \"w\": " + this.weight + ",\n      \"dest\": " + this.destination + "\n    }");
+    }
+
 }
