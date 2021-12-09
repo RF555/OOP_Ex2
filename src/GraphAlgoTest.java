@@ -3,10 +3,7 @@ import api.NodeData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -127,8 +124,8 @@ public class GraphAlgoTest {
     //roeyf
     String g1000 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\1000Nodes.json";
     GraphAlgo ga1000 = new GraphAlgo(new DWGraph(g1000));
-    String g10000 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\10000Nodes.json";
-    GraphAlgo ga10000 = new GraphAlgo(new DWGraph(g10000));
+//    String g10000 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\10000Nodes.json";
+//    GraphAlgo ga10000 = new GraphAlgo(new DWGraph(g10000));
 
     /*
     from whatsapp group:
@@ -142,11 +139,16 @@ public class GraphAlgoTest {
     @Test
     void centerTest() {
         // CHECK THE DIST OF THOSE OPTIONS, IF THE SAME IT'S FINE
-        Assertions.assertEquals(Ga1.center().getKey(), 15);
+        Assertions.assertEquals(Ga1.center().getKey(), 8);
         Assertions.assertEquals(Ga2.center().getKey(), 0);
         Assertions.assertEquals(Ga3.center().getKey(), 40);
-//        Assertions.assertEquals(ga1.center().getKey(), 1);
-//        Assertions.assertEquals(ga1.center().getKey(), );
+        Assertions.assertEquals(ga1.center().getKey(), 1);
+        Assertions.assertEquals(ga2.center().getKey(), 2);
+        List<NodeData> NL = new LinkedList<>();
+        int[] centerNodeID = new int[1];
+        double[] dist = new double[1];
+        ga2.center(NL, centerNodeID, dist);
+        Assertions.assertEquals(dist[0], 7);
 //        Assertions.assertEquals(ga1000.center().getKey(),362);
 //        Assertions.assertEquals(ga10000.center().getKey(),3846);
     }

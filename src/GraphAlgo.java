@@ -50,145 +50,111 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
     // MY FINAL TRY!
     @Override
     public double shortestPathDist(int src, int dest) {
-
-    }
-
-    private void dijkstra(int src,){
-
-    }
-
-    private void relax(Edge){
-
-    }
-
-    // Dijkstra-matanel
-    /*
-    @Override
-    public double shortestPathDist(int src, int dest) {
-        if (this.myGraph.nodeSize() == 0 || this.myGraph.getNode(src) == null || this.myGraph.getNode(dest) == null)
-            return -1;
         if (src == dest)
             return 0;
-        List<NodeData> path = this.shortestPath(src, dest);
-        if (path == null)
+        dijkstra(src);
+        if (this.myGraph.nodes.get(dest).getNodeWeight() == Double.MAX_VALUE)
             return -1;
-        if (path.get(0) == this.myGraph.getNode(src))
-            return this.myGraph.getNode(dest).getWeight();
-        return 0;
+        else
+            return this.myGraph.nodes.get(dest).getNodeWeight();
     }
 
     @Override
     public List<NodeData> shortestPath(int src, int dest) {
-
+        dijkstra(src);
+        return getPrevsList(src, dest);
     }
 
-    // Matanel's Dijkstra
-    @Override
-    public List<NodeData> shortestPath(int src, int dest) {
+    private void dijkstra(int src) {
         Comparator<NodeData> lessWeight = new Comparator<>() {
             @Override
             public int compare(NodeData node1, NodeData node2) {
                 return Double.compare(node1.getWeight(), node2.getWeight());
             }
         };
-        Iterator<NodeData> resetnodes = this.myGraph.nodeIter();
-        while (resetnodes.hasNext()) {
-            Node r = (Node) resetnodes.next();
-            r.setWeight(Double.MAX_VALUE);
-            r.setTag(0);
-        }
-        PriorityQueue<Node> q = new PriorityQueue<>(lessWeight);
-        HashMap<Integer, Integer> parents = new HashMap();
-        Node tempnode = (Node) this.myGraph.getNode(src);
-        q.add(tempnode);
-        tempnode.nodeWeight = 0;
-        while (!q.isEmpty()) {
-            Node curr = q.poll();
-            if (curr.getTag() == 0) {
-                curr.setTag(1);
-                if (curr.getKey() == dest) break;
-                Iterator<NodeData> it = this.myGraph.nodeIter();
-                while (it.hasNext()) {
-                    Node n = (Node) it.next();
-                    if (n.getTag() == 0) {
-                        Edge temp = (Edge) this.myGraph.getEdge(curr.getKey(), n.getKey());
-                        if (temp != null && temp.getWeight() + curr.nodeWeight < n.nodeWeight) {
-                            n.setWeight((temp.getWeight() + curr.nodeWeight));
-                            if (parents.containsKey(n.getKey())) {
-                                parents.remove(n.getKey());
-                            }
-                            parents.put(n.getKey(), curr.getKey());
-                            if (!q.contains(n))
-                                q.add(n);
-                        }
-                    }
-                }
+        PriorityQueue<Node> pq = new PriorityQueue<>(lessWeight);
+        this.myGraph.nodes.forEach((id, node) -> {
+            node.setPrevNodeID(-1);
+            node.setTag(WHITE);
+            if (id == src)
+                node.setWeight(0);
+            else
+                node.setWeight(Double.MAX_VALUE);
+//            pq.add(node);
+        });
+//        this.myGraph.nodes.get(src).setNodeWeight(0);
+        pq.add(this.myGraph.nodes.get(src));
+        while (!pq.isEmpty()) {
+            Node curr = pq.poll();
+            if (curr.getTag() == WHITE) {
+                curr.setTag(BLACK);
+                this.myGraph.edegs.get(curr.getKey()).forEach((destID, edge) -> {
+                    if (getNodeTag(edge.getDest()) == WHITE)
+                        relax(edge);
+                    this.myGraph.edegs.get(curr.getKey()).forEach((dest, e) -> pq.add(getNode(e.getDest())));
+                });
             }
         }
-        List<Node> path = new ArrayList<>();
-        if (this.myGraph.getNode(dest).getWeight() == Double.MAX_VALUE)
-            return null;
-        int assemble = dest;
-        while (assemble != src) {
-            Node par = (Node) this.myGraph.getNode(assemble);
-            path.add(par);
-            assemble = parents.get(assemble);
-        }
-        path.add((Node) this.myGraph.getNode(src));
-        List<NodeData> reversedpath = new ArrayList<>();
-        for (int i = path.size() - 1; i >= 0; i--) {
-            reversedpath.add(path.get(i));
-        }
-        return reversedpath;
     }
-    **/
 
-
-    private List<NodeData> removeDup(List<NodeData> NL) {
-        List<NodeData> new_list = new LinkedList<>();
-        for (NodeData node : NL) {
-            if (!new_list.contains(node))
-                new_list.add(node);
+    private void relax(Edge e) {
+        if (getNodeWeight(e.getDest()) > (getNodeWeight(e.getSrc()) + e.getWeight())) {
+            this.myGraph.nodes.get(e.getDest()).setNodeWeight(getNodeWeight(e.getSrc()) + e.getWeight());
+            this.myGraph.nodes.get(e.getDest()).setPrevNodeID(e.getSrc());
         }
-        return new LinkedList<>(new_list);
     }
 
     @Override
     public NodeData center() {
+        List<NodeData> NL = new LinkedList<>();
+        int[] centerNodeID = new int[1];
+        double[] dist = new double[1];
+        center(NL, centerNodeID, dist);
+        return this.myGraph.nodes.get(centerNodeID[0]);
+    }
+
+    void center(List<NodeData> NL, int[] centerNodeID, double[] dist) {
         double centerDist = Double.MAX_VALUE;
-        Iterator<NodeData> it1 = this.myGraph.nodeIter();
-        NodeData curr_src;
         NodeData tempCenter = new Node(-1, new GeoLocationData(0, 0, 0));
-        while (it1.hasNext()) {
-            curr_src = it1.next();
-            Iterator<NodeData> it2 = this.myGraph.nodeIter();
+        List<NodeData> centerNL = null;
+        for (Node node1 : this.myGraph.nodes.values()) {
+            dijkstra(node1.getKey());
             double maxDist = -1;
-            double currDist = -1;
-            NodeData curr_dest = new Node(-1, new GeoLocationData(0, 0, 0));
             NodeData curr_maxNode = new Node(-1, new GeoLocationData(0, 0, 0));
-            while (it2.hasNext()) {
-                curr_dest = it2.next();
-                currDist = shortestPathDist(curr_src.getKey(), curr_dest.getKey());
-                if (currDist < Double.MAX_VALUE) {
-                    if (currDist > maxDist) {
-                        maxDist = currDist;
-                        curr_maxNode = curr_dest;
+            List<NodeData> maxNL = null;
+            for (Node node2 : this.myGraph.nodes.values()) {
+                if (node2.getWeight() < Double.MAX_VALUE) {
+                    if (node2.getWeight() > maxDist && node2.getWeight() != -1) {
+                        maxDist = node2.getWeight();
+                        curr_maxNode = node1;
+                        maxNL = getPrevsList(node1.getKey(), node2.getKey());
                     }
                 }
-
-//                NodeData tempIt = it2.next();
-//                if (tempIt.getWeight() < Double.MAX_VALUE)
-//                    if (tempIt.getWeight() > maxDist) {
-//                        maxDist = tempIt.getWeight();
-//                        curr_dest = tempIt;
-//                    }
             }
-            if (maxDist < centerDist) {
+            if (centerDist > maxDist) {
                 centerDist = maxDist;
                 tempCenter = curr_maxNode;
+                centerNL = maxNL;
             }
         }
-        return tempCenter;
+        dist[0] = centerDist;
+        centerNodeID[0] = tempCenter.getKey();
+        assert centerNL != null;
+        NL.addAll(centerNL);
+    }
+
+    private List<NodeData> getPrevsList(int src, int dest) {
+        if (this.myGraph.nodes.get(dest).getNodeWeight() == Double.MAX_VALUE)
+            return null;
+        List<NodeData> NL = new LinkedList<>();
+        NL.add(this.myGraph.nodes.get(dest));
+        double path = this.myGraph.nodes.get(dest).getNodeWeight();
+        Node curr = this.myGraph.nodes.get(dest);
+        while (NL.get(0).getKey() != src && path > 0) {
+            NL.add(0, getPrevNode(curr));
+            curr = getPrevNode(curr);
+        }
+        return NL;
     }
 
     @Override
@@ -256,16 +222,24 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
         return this.myGraph.getEdge(src, dest);
     }
 
-    private NodeData getNode(int nodeID) {
+    private double getEdgeW(Node src, Node dest) {
+        return this.myGraph.getEdge(src.getKey(), dest.getKey()).getWeight();
+    }
+
+    private NodeData getNodeData(int nodeID) {
         return this.myGraph.getNode(nodeID);
     }
 
+    private Node getNode(int nodeID) {
+        return (Node) this.myGraph.getNode(nodeID);
+    }
+
     private double getNodeWeight(int nodeID) {
-        return this.myGraph.nodes.get(nodeID).getNodeWeight();
+        return this.myGraph.nodes.get(nodeID).getWeight();
     }
 
     private void setNodeWeight(int nodeID, double w) {
-        this.myGraph.nodes.get(nodeID).setNodeWeight(w);
+        this.myGraph.nodes.get(nodeID).setWeight(w);
     }
 
     // WHITE (not visited) = 0, BLACK (visited) = 2
@@ -280,6 +254,10 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
 
     private int getPrevNodeID(int nodeID) {
         return this.myGraph.nodes.get(nodeID).getPrevNodeID();
+    }
+
+    private Node getPrevNode(Node node) {
+        return this.myGraph.nodes.get(node.getPrevNodeID());
     }
 
     private void setPrevNodeID(int nodeID, int prevNodeID) {
