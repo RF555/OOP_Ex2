@@ -48,6 +48,7 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
     }
 
     // Dijkstra-matanel
+    /*
     @Override
     public double shortestPathDist(int src, int dest) {
         if (this.myGraph.nodeSize() == 0 || this.myGraph.getNode(src) == null || this.myGraph.getNode(dest) == null)
@@ -62,6 +63,12 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
         return 0;
     }
 
+    @Override
+    public List<NodeData> shortestPath(int src, int dest) {
+
+    }
+
+    // Matanel's Dijkstra
     @Override
     public List<NodeData> shortestPath(int src, int dest) {
         Comparator<NodeData> lessWeight = new Comparator<>() {
@@ -120,6 +127,7 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
         }
         return reversedpath;
     }
+    **/
 
 
     private List<NodeData> removeDup(List<NodeData> NL) {
@@ -147,10 +155,10 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
             while (it2.hasNext()) {
                 curr_dest = it2.next();
                 currDist = shortestPathDist(curr_src.getKey(), curr_dest.getKey());
-                if(currDist<Double.MAX_VALUE){
-                    if(currDist>maxDist){
-                        maxDist=currDist;
-                        curr_maxNode=curr_dest;
+                if (currDist < Double.MAX_VALUE) {
+                    if (currDist > maxDist) {
+                        maxDist = currDist;
+                        curr_maxNode = curr_dest;
                     }
                 }
 
