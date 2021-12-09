@@ -7,29 +7,26 @@ import java.util.*;
 public class DWGraph implements api.DirectedWeightedGraph {
     HashMap<Integer, Node> nodes = new HashMap<Integer, Node>();
     HashMap<Integer, HashMap<Integer, Edge>> edegs = new HashMap<Integer, HashMap<Integer, Edge>>();
+    Stack<Integer> nextKey = new Stack<>();
     boolean iterFlag;
-    int mc, edgesNumber;
+    double[] corners = new double[4];
+    int mc, edgesNumber, nodeNumber;
 
 
     public DWGraph() {
         this.mc = 0;
         edgesNumber = 0;
         this.iterFlag = false;
-        this.nodes = new HashMap<Integer, Node>();
-        this.edegs = new HashMap<Integer, HashMap<Integer, Edge>>();
-    }
-
-    public DWGraph(JSON json) {
-        json.import_all_nodes(this);
-        json.import_all_edges(this);
-        this.mc = 0;
-
     }
 
     public DWGraph(String jsonFile) {
         this.iterFlag = false;
         edgesNumber = 0;
         this.mc = 0;
+        this.corners[0] = Double.MAX_VALUE;
+        this.corners[1] = 0;
+        this.corners[2] = Double.MAX_VALUE;
+        this.corners[3] = 0;
         // this.nodes.put(node.key,node);
         JSON json = new JSON(jsonFile);
         json.import_all_nodes(this);
@@ -61,7 +58,16 @@ public class DWGraph implements api.DirectedWeightedGraph {
             //check if allready exist.
             if (!this.nodes.containsKey(n.getKey())) {
                 nodes.put(n.getKey(), (Node) n);
+                this.nodeNumber = this.nodeNumber + 1;
                 this.mc = this.mc + 1;
+                if (n.getLocation().x() < this.corners[0])
+                    this.corners[0] = n.getLocation().x();
+                if (n.getLocation().x() > this.corners[1])
+                    this.corners[1] = n.getLocation().x();
+                if (n.getLocation().y() < this.corners[2])
+                    this.corners[2] = n.getLocation().y();
+                if (n.getLocation().y() > this.corners[3])
+                    this.corners[3] = n.getLocation().y();
             }
         }
     }
@@ -93,6 +99,10 @@ public class DWGraph implements api.DirectedWeightedGraph {
                         this.edgesNumber = this.edgesNumber + 1;
                     }
                 }
+            }
+            //allready egde from this SRC to this DST just need to change W
+            else {
+                this.edegs.get(src).get(dest).weight = w;
             }
         }
     }
@@ -158,8 +168,10 @@ public class DWGraph implements api.DirectedWeightedGraph {
                     this.edgesNumber = this.edgesNumber - this.edegs.get(key).size();
                     this.edegs.remove(key);
                     this.mc = this.mc + 1;
-                    return this.nodes.remove(key);
+                    this.nextKey.push(key);
+                    this.nodeNumber = this.nodeNumber + 1;
                 }
+                return this.nodes.remove(key);
             }
         }
         return null;
@@ -195,6 +207,21 @@ public class DWGraph implements api.DirectedWeightedGraph {
     @Override
     public int getMC() {
         return this.mc;
+    }
+
+    public int nextKey() {
+        if (this.nextKey.empty())
+            return this.nodeNumber;
+        else
+            return this.nextKey.pop();
+    }
+
+    public double[] getBounds() {
+        return this.corners;
+    }
+
+    public void setFlag() {
+        this.iterFlag = false;
     }
 
     @Override
