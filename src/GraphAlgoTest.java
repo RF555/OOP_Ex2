@@ -29,7 +29,7 @@ public class GraphAlgoTest {
     GraphAlgo ga1 = new GraphAlgo(new DWGraph(g1));
     GraphAlgo ga2 = new GraphAlgo(new DWGraph(g2));
     GraphAlgo Ga1 = new GraphAlgo(new DWGraph(G1));
-    GraphAlgo Ga2 = new GraphAlgo(new DWGraph(G1));
+    GraphAlgo Ga2 = new GraphAlgo(new DWGraph(G2));
     GraphAlgo Ga3 = new GraphAlgo(new DWGraph(G3));
 
 //    String g1 = "C:\\Users\\Matanel\\IdeaProjects\\OOP=Ex3\\src\\jsonFiles\\g1.json";
@@ -50,9 +50,6 @@ public class GraphAlgoTest {
 //        System.out.println(pq);
 //
 //    }
-
-
-
 
 
     @Test
@@ -99,27 +96,27 @@ public class GraphAlgoTest {
 
     @Test
     void shortestPathListTest1() {
-        List<NodeData> nodeList01= ga1.shortestPath(0,1);
-        Assertions.assertEquals(nodeList01.get(0).getKey(),0);
-        Assertions.assertEquals(nodeList01.get(1).getKey(),1);
-        List<NodeData> nodeList02= ga1.shortestPath(0,2);
-        Assertions.assertEquals(nodeList02.get(0).getKey(),0);
-        Assertions.assertEquals(nodeList02.get(1).getKey(),1);
-        Assertions.assertEquals(nodeList02.get(2).getKey(),2);
-        List<NodeData> nodeList20= ga1.shortestPath(2,0);
-        Assertions.assertEquals(nodeList20.get(0).getKey(),2);
-        Assertions.assertEquals(nodeList20.get(1).getKey(),1);
-        Assertions.assertEquals(nodeList20.get(2).getKey(),0);
-        List<NodeData> nodeList03= ga1.shortestPath(0,3);
-        Assertions.assertEquals(nodeList03.get(0).getKey(),0);
-        Assertions.assertEquals(nodeList03.get(1).getKey(),1);
-        Assertions.assertEquals(nodeList03.get(2).getKey(),2);
-        Assertions.assertEquals(nodeList03.get(3).getKey(),3);
-        List<NodeData> nodeList30= ga1.shortestPath(3,0);
-        Assertions.assertEquals(nodeList30.get(0).getKey(),3);
-        Assertions.assertEquals(nodeList30.get(1).getKey(),2);
-        Assertions.assertEquals(nodeList30.get(2).getKey(),1);
-        Assertions.assertEquals(nodeList30.get(3).getKey(),0);
+        List<NodeData> nodeList01 = ga1.shortestPath(0, 1);
+        Assertions.assertEquals(nodeList01.get(0).getKey(), 0);
+        Assertions.assertEquals(nodeList01.get(1).getKey(), 1);
+        List<NodeData> nodeList02 = ga1.shortestPath(0, 2);
+        Assertions.assertEquals(nodeList02.get(0).getKey(), 0);
+        Assertions.assertEquals(nodeList02.get(1).getKey(), 1);
+        Assertions.assertEquals(nodeList02.get(2).getKey(), 2);
+        List<NodeData> nodeList20 = ga1.shortestPath(2, 0);
+        Assertions.assertEquals(nodeList20.get(0).getKey(), 2);
+        Assertions.assertEquals(nodeList20.get(1).getKey(), 1);
+        Assertions.assertEquals(nodeList20.get(2).getKey(), 0);
+        List<NodeData> nodeList03 = ga1.shortestPath(0, 3);
+        Assertions.assertEquals(nodeList03.get(0).getKey(), 0);
+        Assertions.assertEquals(nodeList03.get(1).getKey(), 1);
+        Assertions.assertEquals(nodeList03.get(2).getKey(), 2);
+        Assertions.assertEquals(nodeList03.get(3).getKey(), 3);
+        List<NodeData> nodeList30 = ga1.shortestPath(3, 0);
+        Assertions.assertEquals(nodeList30.get(0).getKey(), 3);
+        Assertions.assertEquals(nodeList30.get(1).getKey(), 2);
+        Assertions.assertEquals(nodeList30.get(2).getKey(), 1);
+        Assertions.assertEquals(nodeList30.get(3).getKey(), 0);
     }
 
     //Roey
@@ -133,10 +130,21 @@ public class GraphAlgoTest {
     String g10000 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\10000Nodes.json";
     GraphAlgo ga10000 = new GraphAlgo(new DWGraph(g10000));
 
+    /*
+    from whatsapp group:
+    G1 center 8
+    G2 center 0
+    G3 center 40
+    Center 1000 nodes = id:362
+    Center 10000 nodes = id:3846
+    **/
 
     @Test
     void centerTest() {
-//        Assertions.assertEquals(Ga1.center().getKey(), 15);
+        // CHECK THE DIST OF THOSE OPTIONS, IF THE SAME IT'S FINE
+        Assertions.assertEquals(Ga1.center().getKey(), 15);
+        Assertions.assertEquals(Ga2.center().getKey(), 0);
+        Assertions.assertEquals(Ga3.center().getKey(), 40);
 //        Assertions.assertEquals(ga1.center().getKey(), 1);
 //        Assertions.assertEquals(ga1.center().getKey(), );
 //        Assertions.assertEquals(ga1000.center().getKey(),362);
