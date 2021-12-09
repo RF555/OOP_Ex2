@@ -33,6 +33,8 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
 
     @Override
     public DirectedWeightedGraph copy() {
+        JSON json =new JSON(this.myGraph);
+        DirectedWeightedGraph newGraph=new DWGraph(json);
         return null;
     }
 
@@ -155,15 +157,19 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
         return NL;
     }
 
+    // all mutations solution
     @Override
     public List<NodeData> tsp(List<NodeData> cities) {
+
         return null;
     }
 
     @Override
     public boolean save(String file) {
         JSON j = new JSON(this.myGraph);
-        return j.toJSONFileBool(file);
+//        return j.toJSONFileBool(file);
+        j.toJSONFile(file);
+        return true;
     }
 
     @Override

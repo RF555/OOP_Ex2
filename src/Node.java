@@ -1,5 +1,6 @@
 import api.GeoLocation;
 import api.NodeData;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -7,34 +8,42 @@ import java.util.List;
 
 public class Node implements api.NodeData, Comparable<Node> {
     final int WHITE = 0, GRAY = 1, BLACK = 2;
-    int key;
+    int id;
     double nodeWeight;
     GeoLocationData cordinates;
     int tag, prevNodeID;
     LinkedList<Edge> incomingEdges = new LinkedList<Edge>();
-    List<NodeData> NL = new ArrayList<>();
-    double spv; // Shortest path value (for the ShortestPath function)
 
     public Node() {
         this.cordinates = new GeoLocationData();
-        this.key = 0;
+        this.id = 0;
         this.tag = WHITE;
         this.nodeWeight = Integer.MAX_VALUE;
         this.prevNodeID = -1;
     }
 
-    public Node(int key, GeoLocation L) {
+    public Node(int id, GeoLocation L) {
         this.cordinates = (GeoLocationData) L;
-        this.key = key;
+        this.id = id;
         this.tag = WHITE;
         this.nodeWeight = Integer.MAX_VALUE;
         this.prevNodeID = -1;
+    }
+
+    public Node(JSONObject nodeObj) {
+        this.id = nodeObj.getInt("id");
+        String[] stGeo = nodeObj.getString("pos").split(",");
+        this.cordinates = new GeoLocationData(Double.parseDouble(stGeo[0]), Double.parseDouble(stGeo[1]), Double.parseDouble(stGeo[2]));
+        if (nodeObj.has("nodeWeight"))
+            this.nodeWeight = nodeObj.getDouble("nodeWeight");
+        if (nodeObj.has("prevNodeID"))
+            this.prevNodeID = nodeObj.getInt("prevNodeID");
     }
 
     @Override
     public int getKey() {
 
-        return this.key;
+        return this.id;
     }
 
     @Override
@@ -54,6 +63,14 @@ public class Node implements api.NodeData, Comparable<Node> {
         return this.nodeWeight;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public void setWeight(double w) {
 
@@ -68,7 +85,7 @@ public class Node implements api.NodeData, Comparable<Node> {
     @Override
     public void setInfo(String s) {
         String tempString = s.split(":")[1];
-        this.key = Integer.parseInt(tempString);
+        this.id = Integer.parseInt(tempString);
     }
 
     @Override
@@ -83,16 +100,11 @@ public class Node implements api.NodeData, Comparable<Node> {
         this.tag = t;
     }
 
+    @Override
     public String toString() {
-        return "Key:" + this.key;
-    }
-
-    public double getSpv() {
-        return spv;
-    }
-
-    public void setSpv(double spv) {
-        this.spv = spv;
+        return ("\n    {\n      \"pos\": \"" + this.cordinates.toString() + "\",\n      \"id\": " + this.id +
+                ",\n      \"nodeWeight\": " + this.nodeWeight + ",\n      \"prevNodeID\": " + this.prevNodeID +
+                ",\n      \"tag\": " + this.tag + "\n    }");
     }
 
     public void setPrevNodeID(int prevNodeID) {
@@ -116,11 +128,4 @@ public class Node implements api.NodeData, Comparable<Node> {
         return Double.compare(this.getNodeWeight(), n.getNodeWeight());
     }
 
-    public void setNL(List<NodeData> NL) {
-        this.NL = NL;
-    }
-
-    public List<NodeData> getNL() {
-        return NL;
-    }
 }

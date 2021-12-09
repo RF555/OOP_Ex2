@@ -1,4 +1,3 @@
-import api.EdgeData;
 import api.NodeData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -10,21 +9,27 @@ import static org.junit.Assert.fail;
 
 public class GraphAlgoTest {
     //roeyf
-    String G1 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\data\\G1.json";
-    String G2 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\data\\G2.json";
-    String G3 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\data\\G3.json";
-    String g1 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\g1.json";
-    String g2 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\g2.json";
+//    String G1 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\data\\G1.json";
+//    String G2 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\data\\G2.json";
+//    String G3 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\data\\G3.json";
+//    String my_g1 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\my_g1.json";
+//    String my_g2 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\my_g2.json";
+//    String g1000 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\1000Nodes.json";
+//    String g10000 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\10000Nodes.json";
 
-    //Roey
-//    String G1 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\data\\G1.json";
-//    String G2 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\data\\G2.json";
-//    String G3 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\data\\G3.json";
-//    String g1 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\g1.json";
-//    String g2 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\g2.json";
 
-    GraphAlgo ga1 = new GraphAlgo(new DWGraph(g1));
-    GraphAlgo ga2 = new GraphAlgo(new DWGraph(g2));
+    // Roey
+    String G1 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\data\\G1.json";
+    String G2 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\data\\G2.json";
+    String G3 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\data\\G3.json";
+    String my_g1 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\my_g1.json";
+    String my_g2 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\my_g2.json";
+    String g1000 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\1000Nodes.json";
+    String g10000 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\10000Nodes.json";
+
+
+    GraphAlgo ga1 = new GraphAlgo(new DWGraph(my_g1));
+    GraphAlgo ga2 = new GraphAlgo(new DWGraph(my_g2));
     GraphAlgo Ga1 = new GraphAlgo(new DWGraph(G1));
     GraphAlgo Ga2 = new GraphAlgo(new DWGraph(G2));
     GraphAlgo Ga3 = new GraphAlgo(new DWGraph(G3));
@@ -116,15 +121,7 @@ public class GraphAlgoTest {
         Assertions.assertEquals(nodeList30.get(3).getKey(), 0);
     }
 
-    //Roey
-//    String g1000 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\1000Nodes.json";
 //    GraphAlgo ga1000 = new GraphAlgo(new DWGraph(g1000));
-//    String g10000 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\10000Nodes.json";
-//    GraphAlgo ga10000 = new GraphAlgo(new DWGraph(g10000));
-    //roeyf
-    String g1000 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\1000Nodes.json";
-    GraphAlgo ga1000 = new GraphAlgo(new DWGraph(g1000));
-//    String g10000 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\10000Nodes.json";
 //    GraphAlgo ga10000 = new GraphAlgo(new DWGraph(g10000));
 
     /*
@@ -152,4 +149,34 @@ public class GraphAlgoTest {
 //        Assertions.assertEquals(ga1000.center().getKey(),362);
 //        Assertions.assertEquals(ga10000.center().getKey(),3846);
     }
+
+    //roeyf
+//    String my_g1_output = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\OutputFiles\\my_g1_output.json";
+//    String my_g2_output = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\OutputFiles\\my_g2_output.json";
+//    String G1_output = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\OutputFiles\\G1_output.json";
+//    String G2_output = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\OutputFiles\\G2_output.json";
+//    String G3_output = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\OutputFiles\\G3_output.json";
+
+    //Roey
+    String my_g1_output = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\OutputFiles\\my_g1_output.json";
+    String my_g2_output = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\OutputFiles\\my_g2_output.json";
+    String G1_output = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\OutputFiles\\G1_output.json";
+    String G2_output = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\OutputFiles\\G2_output.json";
+    String G3_output = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\OutputFiles\\G3_output.json";
+
+    @Test
+    void savTest() {
+        double d1=ga1.shortestPathDist(0,3);
+        d1=ga2.shortestPathDist(0,4);
+        d1=Ga1.shortestPathDist(0,16);
+        d1=Ga2.shortestPathDist(0,30);
+        d1=Ga3.shortestPathDist(0,47);
+        boolean save_my_g1 = ga1.save(my_g1_output);
+        boolean save_my_g2 = ga2.save(my_g2_output);
+        boolean save_G1 = Ga1.save(G1_output);
+        boolean save_G2 = Ga2.save(G2_output);
+        boolean save_G3 = Ga3.save(G3_output);
+    }
+
+
 }

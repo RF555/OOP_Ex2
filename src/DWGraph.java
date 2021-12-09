@@ -1,5 +1,6 @@
 import api.EdgeData;
 import api.NodeData;
+import org.json.JSONObject;
 
 import java.util.*;
 
@@ -14,6 +15,15 @@ public class DWGraph implements api.DirectedWeightedGraph {
         this.mc = 0;
         edgesNumber = 0;
         this.iterFlag = false;
+        this.nodes = new HashMap<Integer, Node>();
+        this.edegs = new HashMap<Integer, HashMap<Integer, Edge>>();
+    }
+
+    public DWGraph(JSON json) {
+        json.import_all_nodes(this);
+        json.import_all_edges(this);
+        this.mc = 0;
+
     }
 
     public DWGraph(String jsonFile) {
@@ -185,5 +195,20 @@ public class DWGraph implements api.DirectedWeightedGraph {
     @Override
     public int getMC() {
         return this.mc;
+    }
+
+    @Override
+    public String toString() {
+        ArrayList<Edge> edges = new ArrayList<>();
+        this.edegs.forEach((src, destMap) -> {
+            this.edegs.get(src).forEach((dest, edge) -> {
+                edges.add(edge);
+            });
+        });
+        ArrayList<Node> nodes = new ArrayList<>();
+        this.nodes.forEach((id, node) -> {
+            nodes.add(node);
+        });
+        return "{\n  \"Edges\": " + edges + ",\n  \"Nodes\": " + nodes + "\n}";
     }
 }

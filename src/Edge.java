@@ -19,6 +19,9 @@ public class Edge implements api.EdgeData, Comparable<EdgeData> {
         this.destination = dst;
         this.tagInfo = WHITE;
     }
+    public double getW() {
+        return this.weight;
+    }
 
     @Override
     public int getSrc() {
@@ -34,9 +37,9 @@ public class Edge implements api.EdgeData, Comparable<EdgeData> {
 
     @Override
     public double getWeight() {
-
         return this.weight;
     }
+
 
     @Override
     public String getInfo() {
@@ -56,7 +59,7 @@ public class Edge implements api.EdgeData, Comparable<EdgeData> {
     }
 
     public String toString() {
-        return ("{\n    \"src\": " + this.source + ",\n    \"w\": " + this.weight + ",\n    \"dest\": " + this.destination + "\n}");
+        return ("\n    {\n      \"src\": " + this.source + ",\n      \"w\": " + this.weight + ",\n      \"dest\": " + this.destination + "\n    }");
     }
 
     @Override

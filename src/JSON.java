@@ -11,8 +11,8 @@ import java.util.Scanner;
 
 
 public class JSON {
-    JSONArray NodeJsonArr=new JSONArray();
-    JSONArray EdgeJsonArr=new JSONArray();
+    JSONArray NodeJsonArr = new JSONArray();
+    JSONArray EdgeJsonArr = new JSONArray();
     JSONObject graphObj;
     int nodeCount;
     int edgeCount;
@@ -35,10 +35,21 @@ public class JSON {
     // NEED TO TEST!!!
     public JSON(DWGraph g) { // Constructor of JSON from graph object
         try {
-            this.NodeJsonArr = new JSONArray(g.nodes.values());
-            this.EdgeJsonArr = new JSONArray(g.edegs.values());
-            String string_g = "{\"Edges\":" + this.EdgeJsonArr.toString() + ",\"Nodes\":" + this.NodeJsonArr.toString() + "}";
-            this.graphObj = new JSONObject(string_g);
+//            ArrayList<Edge> edges = new ArrayList<>();
+//            g.edegs.forEach((src, destMap) -> {
+//                g.edegs.get(src).forEach((dest, edge) -> {
+//                    edges.add(edge);
+//                });
+//            });
+//            ArrayList<Node> nodes = new ArrayList<>();
+//            g.nodes.forEach((id, node) -> {
+//                nodes.add(node);
+//            });
+//            this.NodeJsonArr = new JSONArray(g.nodes.values());
+//            this.EdgeJsonArr = new JSONArray(g.edegs.values());
+//            String string_g = "{\"Edges\":" + this.EdgeJsonArr.toString() + ",\"Nodes\":" + this.NodeJsonArr.toString() + "}";
+//            this.graphObj = new JSONObject("{\n  \"Edges\": \n" + edges + ",\n  \"Nodes\": " + nodes + "\n}");
+            this.graphObj = new JSONObject(g.toString());
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
@@ -66,12 +77,18 @@ public class JSON {
     }
 
     public Node generateNode(JSONObject nodeObj) { //index of node
-        int id = nodeObj.getInt("id");
-        String[] stGeo = nodeObj.getString("pos").split(",");
-        GeoLocationData gld = new GeoLocationData(Double.parseDouble(stGeo[0]), Double.parseDouble(stGeo[1]), Double.parseDouble(stGeo[2]));
-        ++nodeCount;
-        return new Node(id, gld);
+        return new Node(nodeObj);
     }
+
+//    public Node generateNode(JSONObject nodeObj) { //index of node
+//        int id = nodeObj.getInt("id");
+//        String[] stGeo = nodeObj.getString("pos").split(",");
+//        GeoLocationData gld = new GeoLocationData(Double.parseDouble(stGeo[0]), Double.parseDouble(stGeo[1]), Double.parseDouble(stGeo[2]));
+//        double nodeWeight = nodeObj.getDouble("nodeWeight");
+//        int prevNodeID = nodeObj.getInt("prevNodeID");
+//        ++nodeCount;
+//        return new Node(id, gld);
+//    }
 
     public Edge generateEdge(int edge_index) { //index of edge
         JSONObject edgeObj = this.EdgeJsonArr.getJSONObject(edge_index);
