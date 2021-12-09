@@ -80,9 +80,7 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
                 node.setWeight(0);
             else
                 node.setWeight(Double.MAX_VALUE);
-//            pq.add(node);
         });
-//        this.myGraph.nodes.get(src).setNodeWeight(0);
         pq.add(this.myGraph.nodes.get(src));
         while (!pq.isEmpty()) {
             Node curr = pq.poll();
@@ -170,7 +168,6 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
 
     @Override
     public boolean load(String file) {
-//        JSON j = new JSON(file);
         this.myGraph = new DWGraph(file);
         this.nodes = this.myGraph.nodes;
         this.edegs = this.myGraph.edegs;
@@ -275,7 +272,6 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
             return true;
         if (!(obj instanceof DirectedWeightedGraphAlgorithms g))
             return false;
-//         tempEdge;
         AtomicBoolean ans = new AtomicBoolean(false);
         this.myGraph.edegs.forEach((src, destMap) ->
                 destMap.forEach((dest, edge) -> {
