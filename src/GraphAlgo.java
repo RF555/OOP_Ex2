@@ -47,6 +47,12 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
         return false;
     }
 
+    // MY FINAL TRY!
+    @Override
+    public double shortestPathDist(int src, int dest) {
+
+    }
+
     // Dijkstra-matanel
     /*
     @Override
