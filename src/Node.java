@@ -1,65 +1,66 @@
 import api.GeoLocation;
-import api.NodeData;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 public class Node implements api.NodeData, Comparable<Node> {
     final int WHITE = 0, GRAY = 1, BLACK = 2;
     int id;
     double nodeWeight;
-    GeoLocationData cordinates;
+    GeoLocationData coordinates;
     int tag, prevNodeID;
     LinkedList<Edge> incomingEdges = new LinkedList<Edge>();
 
     public Node() {
-        this.cordinates = new GeoLocationData();
+        this.coordinates = new GeoLocationData();
         this.id = 0;
         this.tag = WHITE;
-        this.nodeWeight = Integer.MAX_VALUE;
+        this.nodeWeight = Double.MAX_VALUE;
         this.prevNodeID = -1;
     }
 
     public Node(int id, GeoLocation L) {
-        this.cordinates = (GeoLocationData) L;
+        this.coordinates = (GeoLocationData) L;
         this.id = id;
         this.tag = WHITE;
-        this.nodeWeight = Integer.MAX_VALUE;
+        this.nodeWeight = Double.MAX_VALUE;
         this.prevNodeID = -1;
     }
 
     public Node(JSONObject nodeObj) {
         this.id = nodeObj.getInt("id");
         String[] stGeo = nodeObj.getString("pos").split(",");
-        this.cordinates = new GeoLocationData(Double.parseDouble(stGeo[0]), Double.parseDouble(stGeo[1]), Double.parseDouble(stGeo[2]));
+        this.coordinates = new GeoLocationData(Double.parseDouble(stGeo[0]), Double.parseDouble(stGeo[1]), Double.parseDouble(stGeo[2]));
         if (nodeObj.has("nodeWeight"))
             this.nodeWeight = nodeObj.getDouble("nodeWeight");
         if (nodeObj.has("prevNodeID"))
             this.prevNodeID = nodeObj.getInt("prevNodeID");
     }
 
+    //copy
+    public Node(Graphs.Node other){
+        this.id = other.getKey();
+        this.coordinates = (GeoLocationData) other.getLocation();
+        this.nodeWeight = other.getWeight();
+        this.tag = other.getTag();
+    }
+
     @Override
     public int getKey() {
-
         return this.id;
     }
 
     @Override
     public GeoLocation getLocation() {
-
-        return this.cordinates;
+        return this.coordinates;
     }
 
     @Override
     public void setLocation(GeoLocation p) {
-        this.cordinates = (GeoLocationData) p;
+        this.coordinates = (GeoLocationData) p;
     }
 
     @Override
     public double getWeight() {
-
         return this.nodeWeight;
     }
 
@@ -73,7 +74,6 @@ public class Node implements api.NodeData, Comparable<Node> {
 
     @Override
     public void setWeight(double w) {
-
         this.nodeWeight = w;
     }
 
@@ -84,25 +84,29 @@ public class Node implements api.NodeData, Comparable<Node> {
 
     @Override
     public void setInfo(String s) {
-        String tempString = s.split(":")[1];
-        this.id = Integer.parseInt(tempString);
+        String[] tempString = s.split(":");
+        String[] stGeo = tempString[1].split(",");
+        String[] stGeo1 = tempString[0].split("\"");
+        String[] stGeo2 = tempString[1].split("\"");
+        this.coordinates = new GeoLocationData(Double.parseDouble(stGeo1[1]), Double.parseDouble(stGeo2[0]), Double.parseDouble(stGeo[2]));
+        this.id = Integer.parseInt(tempString[3].split(",")[0]);
+        this.nodeWeight= Double.parseDouble(tempString[5].split(",")[0]);
+        this.tag= Integer.parseInt(tempString[9].split("}")[0]);
     }
 
     @Override
     public int getTag() {
-
         return this.tag;
     }
 
     @Override
     public void setTag(int t) {
-
         this.tag = t;
     }
 
     @Override
     public String toString() {
-        return ("\n    {\n      \"pos\": \"" + this.cordinates.toString() + "\",\n      \"id\": " + this.id +
+        return ("\n    {\n      \"pos\": \"" + this.coordinates.toString() + "\",\n      \"id\": " + this.id +
                 ",\n      \"nodeWeight\": " + this.nodeWeight + ",\n      \"prevNodeID\": " + this.prevNodeID +
                 ",\n      \"tag\": " + this.tag + "\n    }");
     }
