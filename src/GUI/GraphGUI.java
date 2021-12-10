@@ -1,15 +1,16 @@
 package GUI;
 
+import Graph.*;
+import api.EdgeData;
+import api.NodeData;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
-import javax.swing.*;
-import Graphs.*;
-import api.EdgeData;
-import api.NodeData;
 
 
 public class GraphGUI extends JFrame implements ActionListener {

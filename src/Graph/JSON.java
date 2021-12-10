@@ -1,4 +1,4 @@
-package Graphs;
+package Graph;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -13,8 +13,8 @@ import java.util.Scanner;
 
 
 public class JSON {
-    JSONArray NodeJsonArr=new JSONArray();
-    JSONArray EdgeJsonArr=new JSONArray();
+    JSONArray NodeJsonArr = new JSONArray();
+    JSONArray EdgeJsonArr = new JSONArray();
     JSONObject graphObj;
     int nodeCount;
     int edgeCount;
@@ -23,7 +23,6 @@ public class JSON {
         String myJson = null;
         try {
             myJson = new Scanner(new File(jsonFile)).useDelimiter("\\Z").next();
-
             this.graphObj = new JSONObject(myJson);
             this.NodeJsonArr = graphObj.getJSONArray("Nodes");
             this.EdgeJsonArr = graphObj.getJSONArray("Edges");
@@ -34,17 +33,28 @@ public class JSON {
         }
     }
 
-    // NEED TO TEST!!!
     public JSON(DWGraph g) { // Constructor of JSON from graph object
         try {
-            this.NodeJsonArr = new JSONArray(g.nodes.values());
-            this.EdgeJsonArr = new JSONArray(g.edegs.values());
-            String string_g = "{\"Edges\":" + this.EdgeJsonArr.toString() + ",\"Nodes\":" + this.NodeJsonArr.toString() + "}";
-            this.graphObj = new JSONObject(string_g);
+//            ArrayList<Edge> edges = new ArrayList<>();
+//            g.edegs.forEach((src, destMap) -> {
+//                g.edegs.get(src).forEach((dest, edge) -> {
+//                    edges.add(edge);
+//                });
+//            });
+//            ArrayList<Node> nodes = new ArrayList<>();
+//            g.nodes.forEach((id, node) -> {
+//                nodes.add(node);
+//            });
+//            this.NodeJsonArr = new JSONArray(g.nodes.values());
+//            this.EdgeJsonArr = new JSONArray(g.edegs.values());
+//            String string_g = "{\"Edges\":" + this.EdgeJsonArr.toString() + ",\"Nodes\":" + this.NodeJsonArr.toString() + "}";
+//            this.graphObj = new JSONObject("{\n  \"Edges\": \n" + edges + ",\n  \"Nodes\": " + nodes + "\n}");
+            this.graphObj = new JSONObject(g.toString());
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
     }
+
     public JSONArray getNodeJsonArr() {
         return NodeJsonArr;
     }
@@ -67,11 +77,7 @@ public class JSON {
     }
 
     public Node generateNode(JSONObject nodeObj) { //index of node
-        int id = nodeObj.getInt("id");
-        String[] stGeo = nodeObj.getString("pos").split(",");
-        GeoLocationData gld = new GeoLocationData(Double.parseDouble(stGeo[0]), Double.parseDouble(stGeo[1]), Double.parseDouble(stGeo[2]));
-        ++nodeCount;
-        return new Node(id, gld);
+        return new Node(nodeObj);
     }
 
     public Edge generateEdge(int edge_index) { //index of edge
@@ -122,14 +128,4 @@ public class JSON {
         }
     }
 
-    public boolean toJSONFileBool(String fileName) {//Enter file name+path
-        try (FileWriter file = new FileWriter(fileName)) {
-            file.write(this.graphObj.toString());
-            file.flush();
-            return true;
-        } catch (IOException e) {
-            e.fillInStackTrace();
-            return false;
-        }
-    }
 }

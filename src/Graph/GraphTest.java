@@ -1,3 +1,5 @@
+package Graph;
+
 import api.EdgeData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

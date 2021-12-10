@@ -1,3 +1,5 @@
+package Graph;
+
 import api.NodeData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -121,8 +123,8 @@ public class GraphAlgoTest {
         Assertions.assertEquals(nodeList30.get(3).getKey(), 0);
     }
 
-//    GraphAlgo ga1000 = new GraphAlgo(new DWGraph(g1000));
-//    GraphAlgo ga10000 = new GraphAlgo(new DWGraph(g10000));
+    GraphAlgo ga1000 = new GraphAlgo(new DWGraph(g1000));
+    GraphAlgo ga10000 = new GraphAlgo(new DWGraph(g10000));
 
     /*
     from whatsapp group:
@@ -146,7 +148,7 @@ public class GraphAlgoTest {
         double[] dist = new double[1];
         ga2.center(NL, centerNodeID, dist);
         Assertions.assertEquals(dist[0], 7);
-//        Assertions.assertEquals(ga1000.center().getKey(),362);
+        Assertions.assertEquals(ga1000.center().getKey(),362);
 //        Assertions.assertEquals(ga10000.center().getKey(),3846);
     }
 

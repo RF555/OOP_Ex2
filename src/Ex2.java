@@ -1,5 +1,5 @@
-import Graphs.DWGraph;
-import Graphs.GraphAlgo;
+import Graph.DWGraph;
+import Graph.GraphAlgo;
 import api.DirectedWeightedGraph;
 import api.DirectedWeightedGraphAlgorithms;
 import GUI.*;

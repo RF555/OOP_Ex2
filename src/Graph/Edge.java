@@ -1,3 +1,5 @@
+package Graph;
+
 import api.EdgeData;
 
 public class Edge implements api.EdgeData, Comparable<EdgeData> {

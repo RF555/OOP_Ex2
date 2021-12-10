@@ -1,3 +1,5 @@
+package Graph;
+
 import api.GeoLocation;
 import org.json.JSONObject;
 import java.util.LinkedList;
@@ -37,7 +39,7 @@ public class Node implements api.NodeData, Comparable<Node> {
     }
 
     //copy
-    public Node(Graphs.Node other){
+    public Node(Node other){
         this.id = other.getKey();
         this.coordinates = (GeoLocationData) other.getLocation();
         this.nodeWeight = other.getWeight();

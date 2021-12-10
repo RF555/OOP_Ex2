@@ -1,14 +1,13 @@
-import api.EdgeData;
+package Graph;
 
-import java.util.Collection;
+import java.io.FileNotFoundException;
 import java.util.List;
-import java.util.PriorityQueue;
 
-public class main_roeyf {
-    public static void main(String[] args) {
-        String st = "C:\\Users\\roeyf\\OneDrive - Ariel University\\Matanel&Roey\\Ex2-OOP\\data\\G1.json";
-//        String st = "C:\\Users\\roeyf\\OneDrive - Ariel University\\Matanel&Roey\\Ex2-OOP\\data\\G2.json";
-//        String st = "C:\\Users\\roeyf\\OneDrive - Ariel University\\Matanel&Roey\\Ex2-OOP\\data\\G3.json";
+public class main_Matanel {
+    public static void main(String[] args) throws FileNotFoundException {
+        String st = "C:\\Users\\Roey\\OneDrive - Ariel University\\Matanel&Roey\\Ex2-OOP\\data\\G1.json";
+//        String st = "C:\\Users\\Roey\\OneDrive - Ariel University\\Matanel&Roey\\Ex2-OOP\\data\\G2.json";
+//        String st = "C:\\Users\\Roey\\OneDrive - Ariel University\\Matanel&Roey\\Ex2-OOP\\data\\G3.json";
         JSON jsonFile = new JSON(st);
 //        System.out.println(test.graph.getString("Edges"));
 //        System.out.println(test.graphObj);
@@ -29,11 +28,6 @@ public class main_roeyf {
         List<Node> Nll = jsonFile.all_nodes_to_list();
         List<Edge> Ell = jsonFile.all_edges_to_list();
         System.out.println(Nll);
-        System.out.println(jsonFile.graphObj.toString());
-        System.out.println(jsonFile.NodeJsonArr.toString());
-        System.out.println(jsonFile.EdgeJsonArr.toString());
-        jsonFile.toJSONFile("C:\\Users\\roeyf\\OneDrive - Ariel University\\Matanel&Roey\\Ex2-OOP\\src\\OutputFiles\\G1_output.json");
-
 
 
     }

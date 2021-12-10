@@ -1,3 +1,5 @@
+package Graph;
+
 public class GeoLocationData implements api.GeoLocation {
     double x_cor, y_cor, z_cor;
 
