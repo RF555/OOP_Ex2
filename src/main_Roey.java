@@ -50,6 +50,7 @@ public class main_Roey {
 //        G3_json.toJSONFile(G3_output);
 //        System.out.println(Nll);
         DWGraph g=new DWGraph(G1_json);
+        g.getNode(0).setInfo(g.getNode(1).toString());
         System.out.println(g.getNode(0).getInfo());
 
 

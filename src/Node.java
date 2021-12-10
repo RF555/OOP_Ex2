@@ -86,12 +86,13 @@ public class Node implements api.NodeData, Comparable<Node> {
     public void setInfo(String s) {
         String[] tempString = s.split(":");
         String[] stGeo = tempString[1].split(",");
-        String[] stGeo1 = tempString[0].split("\"");
-        String[] stGeo2 = tempString[1].split("\"");
-        this.coordinates = new GeoLocationData(Double.parseDouble(stGeo1[1]), Double.parseDouble(stGeo2[0]), Double.parseDouble(stGeo[2]));
-        this.id = Integer.parseInt(tempString[3].split(",")[0]);
-        this.nodeWeight= Double.parseDouble(tempString[5].split(",")[0]);
-        this.tag= Integer.parseInt(tempString[9].split("}")[0]);
+        String[] stGeo1 = stGeo[1].split("\"");
+        String[] stGeo2 = stGeo1[0].split("\"");
+        String[] stZ=stGeo[2].split("\"")[0].split(" ");
+        this.coordinates = new GeoLocationData(Double.parseDouble(stGeo1[0]), Double.parseDouble(stGeo2[0]), Double.parseDouble(stZ[0]));
+        this.id= Integer.parseInt(tempString[2].split(",")[0].split(" ")[1]);
+        this.nodeWeight = Double.parseDouble(tempString[3].split(" ")[1].split(",")[0]);
+        this.tag= Integer.parseInt(tempString[5].split("\n")[0].split(" ")[1]);
     }
 
     @Override
