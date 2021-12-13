@@ -1,5 +1,6 @@
 package Graph;
 
+import api.EdgeData;
 import api.NodeData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -10,25 +11,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 public class GraphAlgoTest {
-    //roeyf
-//    String G1 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\data\\G1.json";
-//    String G2 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\data\\G2.json";
-//    String G3 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\data\\G3.json";
-//    String my_g1 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\my_g1.json";
-//    String my_g2 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\my_g2.json";
-//    String g1000 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\1000Nodes.json";
-//    String g10000 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\10000Nodes.json";
 
-
-    // Roey
-    String G1 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\data\\G1.json";
-    String G2 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\data\\G2.json";
-    String G3 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\data\\G3.json";
-    String my_g1 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\my_g1.json";
-    String my_g2 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\my_g2.json";
-    String g1000 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\1000Nodes.json";
-    String g10000 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\10000Nodes.json";
-
+    //input path
+    String G1 = "data/G1.json";
+    String G2 = "data/G2.json";
+    String G3 = "data/G3.json";
+    String my_g1 = "src/jsonFiles/my_g1.json";
+    String my_g2 = "src/jsonFiles/my_g2.json";
+    String g1000 = "src/jsonFiles/1000Nodes.json";
+    String g10000 = "src/jsonFiles/10000Nodes.json";
 
     GraphAlgo ga1 = new GraphAlgo(new DWGraph(my_g1));
     GraphAlgo ga2 = new GraphAlgo(new DWGraph(my_g2));
@@ -36,24 +27,43 @@ public class GraphAlgoTest {
     GraphAlgo Ga2 = new GraphAlgo(new DWGraph(G2));
     GraphAlgo Ga3 = new GraphAlgo(new DWGraph(G3));
 
-//    String g1 = "C:\\Users\\Matanel\\IdeaProjects\\OOP=Ex3\\src\\jsonFiles\\g1.json";
-//    DWGraph MyGraph = new DWGraph(g1);
-//    GraphAlgo myGraph = new GraphAlgo(MyGraph);
+    GraphAlgo ga1000 = new GraphAlgo(new DWGraph(g1000));
+    GraphAlgo ga10000 = new GraphAlgo(new DWGraph(g10000));
 
-//    @Test
-//    void TestTranspose() {
-//        Boolean flag = myGraph.isConnected();
-//        Assertions.assertTrue(flag);
-//    }
-//
-//    @Test
-//    void test() {
-//        int i = 3;
-//        PriorityQueue<EdgeData> pq = new PriorityQueue<EdgeData>(ga2.edegs.get(i).size());
-//        pq.addAll((Collection<? extends EdgeData>) ga2.edegs.get(i).values());
-//        System.out.println(pq);
-//
-//    }
+    /*
+    from whatsapp group:
+    G1 center 8
+    G2 center 0
+    G3 center 40
+    Center 1000 nodes = id:362
+    Center 10000 nodes = id:3846
+    **/
+
+    String g1 = "src/jsonFiles/my_g1.json";
+    DWGraph MyGraph = new DWGraph(g1);
+    GraphAlgo myGraph = new GraphAlgo(MyGraph);
+
+    //output path
+    String my_g1_output = "src/OutputFiles/my_g1_output.json";
+    String my_g2_output = "src/OutputFiles/my_g2_output.json";
+    String G1_output = "src/OutputFiles/G1_output.json";
+    String G2_output = "src/OutputFiles/G2_output.json";
+    String G3_output = "src/OutputFiles/G3_output.json";
+
+    @Test
+    void TestTranspose() {
+        Boolean flag = myGraph.isConnected();
+        Assertions.assertTrue(flag);
+    }
+
+    @Test
+    void test() {
+        int i = 3;
+        PriorityQueue<EdgeData> pq = new PriorityQueue<EdgeData>(ga2.myGraph.edegs.get(i).size());
+        pq.addAll((Collection<? extends EdgeData>) ga2.myGraph.edegs.get(i).values());
+        System.out.println(pq);
+
+    }
 
 
     @Test
@@ -123,17 +133,6 @@ public class GraphAlgoTest {
         Assertions.assertEquals(nodeList30.get(3).getKey(), 0);
     }
 
-    GraphAlgo ga1000 = new GraphAlgo(new DWGraph(g1000));
-    GraphAlgo ga10000 = new GraphAlgo(new DWGraph(g10000));
-
-    /*
-    from whatsapp group:
-    G1 center 8
-    G2 center 0
-    G3 center 40
-    Center 1000 nodes = id:362
-    Center 10000 nodes = id:3846
-    **/
 
     @Test
     void centerTest() {
@@ -151,20 +150,6 @@ public class GraphAlgoTest {
         Assertions.assertEquals(ga1000.center().getKey(),362);
 //        Assertions.assertEquals(ga10000.center().getKey(),3846);
     }
-
-    //roeyf
-//    String my_g1_output = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\OutputFiles\\my_g1_output.json";
-//    String my_g2_output = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\OutputFiles\\my_g2_output.json";
-//    String G1_output = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\OutputFiles\\G1_output.json";
-//    String G2_output = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\OutputFiles\\G2_output.json";
-//    String G3_output = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\OutputFiles\\G3_output.json";
-
-    //Roey
-    String my_g1_output = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\OutputFiles\\my_g1_output.json";
-    String my_g2_output = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\OutputFiles\\my_g2_output.json";
-    String G1_output = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\OutputFiles\\G1_output.json";
-    String G2_output = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\OutputFiles\\G2_output.json";
-    String G3_output = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\OutputFiles\\G3_output.json";
 
     @Test
     void savTest() {

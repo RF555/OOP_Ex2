@@ -7,30 +7,28 @@ import org.json.JSONObject;
 import static org.junit.jupiter.api.Assertions.*;
 
 class JSONTest {
-    //roeyf
-//    String G1 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\data\\G1.json";
-//    String G2 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\data\\G2.json";
-//    String G3 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\data\\G3.json";
-//    String g1 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\my_g1.json";
-//    String g2 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\my_g2.json";
-//    String g1000 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\1000Nodes.json";
-//    String g10000 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\10000Nodes.json";
 
-
-    // Roey
-    String G1 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\data\\G1.json";
-    String G2 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\data\\G2.json";
-    String G3 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\data\\G3.json";
-    String my_g1 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\my_g1.json";
-    String my_g2 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\my_g2.json";
-    String g1000 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\1000Nodes.json";
-    String g10000 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\10000Nodes.json";
+    // input path
+    String G1 = "data/G1.json";
+    String G2 = "data/G2.json";
+    String G3 = "data/G3.json";
+    String my_g1 = "src/jsonFiles/my_g1.json";
+    String my_g2 = "src/jsonFiles/my_g2.json";
+    String g1000 = "src/jsonFiles/1000Nodes.json";
+    String g10000 = "src/jsonFiles/10000Nodes.json";
 
     JSON my_g1_json = new JSON(my_g1);
     JSON my_g2_json = new JSON(my_g2);
     JSON G1_json = new JSON(G1);
     JSON G2_json = new JSON(G2);
     JSON G3_json = new JSON(G3);
+
+    //output path
+    String my_g1_output = "src/OutputFiles/my_g1_output.json";
+    String my_g2_output = "src/OutputFiles/my_g2_output.json";
+    String G1_output = "src/OutputFiles/G1_output.json";
+    String G2_output = "src/OutputFiles/G2_output.json";
+    String G3_output = "src/OutputFiles/G3_output.json";
 
     @Test
     void typeTest() {
@@ -120,20 +118,6 @@ class JSONTest {
             assertEquals(my_g1_json.generateEdge(2 * i + 1).toString(), (new Edge(i + 1, i, 1)).toString());
         }
     }
-
-    //roeyf
-//    String my_g1_output = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\OutputFiles\\my_g1_output.json";
-//    String my_g2_output = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\OutputFiles\\my_g2_output.json";
-//    String G1_output = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\OutputFiles\\G1_output.json";
-//    String G2_output = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\OutputFiles\\G2_output.json";
-//    String G3_output = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\OutputFiles\\G3_output.json";
-
-    //Roey
-    String my_g1_output = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\OutputFiles\\my_g1_output.json";
-    String my_g2_output = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\OutputFiles\\my_g2_output.json";
-    String G1_output = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\OutputFiles\\G1_output.json";
-    String G2_output = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\OutputFiles\\G2_output.json";
-    String G3_output = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\OutputFiles\\G3_output.json";
 
     @Test
     void toJSONFileTest() {

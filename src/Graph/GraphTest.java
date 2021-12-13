@@ -20,8 +20,7 @@ public class GraphTest {
     Node node3= new Node(3,geo3);
     Node node4= new Node(4,geo4);
     Node node5= new Node(5,geo5);
-//    String g1 = "C:\\Users\\Matanel\\IdeaProjects\\OOP=Ex3\\src\\jsonFiles\\g1.json";
-    String g1 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\g1.json";
+    String g1 = "src/jsonFiles/my_g1.json";
     DWGraph MyGraph= new DWGraph(g1);
     @Test
     void addNodesAndEdge() {

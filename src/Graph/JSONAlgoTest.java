@@ -9,24 +9,15 @@ import java.util.Iterator;
 import static org.junit.jupiter.api.Assertions.*;
 
 class JSONAlgoTest {
-    //roeyf
-//    String G1 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\data\\G1.json";
-//    String G2 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\data\\G2.json";
-//    String G3 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\data\\G3.json";
-//    String my_g1 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\my_g1.json";
-//    String my_g2 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\my_g2.json";
-//    String g1000 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\1000Nodes.json";
-//    String g10000 = "C:\\Users\\roeyf\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\10000Nodes.json";
 
-
-    // Roey
-    String G1 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\data\\G1.json";
-    String G2 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\data\\G2.json";
-    String G3 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\data\\G3.json";
-    String my_g1 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\my_g1.json";
-    String my_g2 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\my_g2.json";
-    String g1000 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\1000Nodes.json";
-    String g10000 = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\jsonFiles\\10000Nodes.json";
+    //input path
+    String G1 = "data/G1.json";
+    String G2 = "data/G2.json";
+    String G3 = "data/G3.json";
+    String my_g1 = "src/jsonFiles/my_g1.json";
+    String my_g2 = "src/jsonFiles/my_g2.json";
+    String g1000 = "src/jsonFiles/1000Nodes.json";
+    String g10000 = "src/jsonFiles/10000Nodes.json";
 
     // create DWGraph
     DWGraph g1_DWGraph = new DWGraph(my_g1);
@@ -34,6 +25,14 @@ class JSONAlgoTest {
     DWGraph G1_DWGraph = new DWGraph(G1);
     DWGraph G2_DWGraph = new DWGraph(G2);
     DWGraph G3_DWGraph = new DWGraph(G3);
+
+    // output path
+    String my_g1_output = "src/OutputFiles/my_g1_output.json";
+    String my_g2_output = "src/OutputFiles/my_g2_output.json";
+    String G1_output = "src/OutputFiles/G1_output.json";
+    String G2_output = "src/OutputFiles/G2_output.json";
+    String G3_output = "src/OutputFiles/G3_output.json";
+
 
     @Test
     void constructDWGraphTest() {
@@ -128,13 +127,6 @@ class JSONAlgoTest {
             assertEquals(OGN.getLocation().z(), loadN.getLocation().z());
         }
     }
-
-    String my_g1_output = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\OutputFiles\\my_g1_output.json";
-    String my_g2_output = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\OutputFiles\\my_g2_output.json";
-    String G1_output = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\OutputFiles\\G1_output.json";
-    String G2_output = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\OutputFiles\\G2_output.json";
-    String G3_output = "C:\\Users\\Roey\\Documents\\GitHub\\OOP_Ex2\\src\\OutputFiles\\G3_output.json";
-
 
     @Test
     void save_GraphAlgo_To_JSON_Test() {
@@ -249,7 +241,7 @@ class JSONAlgoTest {
 
     @Test
     void saveTest() {
-        double d=ga1.shortestPathDist(0,3);
+        double d = ga1.shortestPathDist(0, 3);
 //        JSON json =new JSON(ga1.myGraph);
 //        json.toJSONFile(my_g1_output);
         ga1.save(my_g1_output);
