@@ -11,7 +11,7 @@ public class main_roeyf {
 //        String st = "C:\\Users\\roeyf\\OneDrive - Ariel University\\Matanel&Roey\\Ex2-OOP\\data\\G3.json";
         JSON jsonFile = new JSON(st);
 //        System.out.println(test.graph.getString("Edges"));
-//        System.out.println(test.graphObj);
+//        System.out.println(est.graphObj);
 //        System.out.println(test.NodeJsonArr.get(0));
 //        System.out.println(test.EdgeJsonArr.get(0) + "\n\n");
 //        Node n = test.generateNode(1);
